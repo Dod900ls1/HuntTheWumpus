@@ -34,8 +34,8 @@ public class Game {
     }
 
     public boolean isRightStep(int index, int input){
-        for (int i: fullCaves().get(index)) {
-            if(i == input){
+        for (int i : fullCaves().get(index)) {
+            if (i == input) {
                 return true;
             }
         }
