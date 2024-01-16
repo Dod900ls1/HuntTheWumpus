@@ -1,7 +1,27 @@
 import java.util.HashMap;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
+    private Random random = new Random();
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
+    private static Scanner scanner = new Scanner(System.in);
+    private int[] pits;
+
+    public Game(){
+	    int first = (int) (Math.random() * ((20) + 1));
+	    int second = -1;
+
+	    while(second == -1 || first == second){
+    		second = (int) (Math.random() * ((20) + 1));;
+	    }
+        int[] result = {first, second};
+        pits = result;	
+    }
+
+    // public int[] getPits(){
+    //     return this.pits;             I was needed it to check if pits work.
+    // }
 
     private HashMap<Integer, Integer[]> fullCaves() {
         caves.put(1, new Integer[] { 2, 8, 5 });
@@ -27,18 +47,52 @@ public class Game {
 
         return caves;
     }
+    
 
     public void locationOutput(int index) {
         System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", index,
                 fullCaves().get(index)[0], fullCaves().get(index)[1], fullCaves().get(index)[2]);
     }
 
-    public boolean isRightStep(int index, int input){
+    public boolean isRightStep(int index, int input) {
         for (int i : fullCaves().get(index)) {
             if (i == input) {
                 return true;
             }
         }
         return false;
+    }
+
+
+
+    public char getUserInput() {
+        System.out.println("Shoot = S, Walk to another cave = W");
+        return scanner.next().charAt(0);
+    }
+
+    public int moveCave(Game game, int currentPlace) {
+        boolean validInput = true;
+        while (validInput) {
+            game.locationOutput(currentPlace);
+            int cave = scanner.nextInt();
+
+            if (game.isRightStep(currentPlace, cave)) {
+                validInput = false;
+                game.locationOutput(cave);
+                return cave;
+            } else {
+                System.out.println("WRONG!");
+            }
+        }
+        return currentPlace;
+    }
+
+    public boolean pitTrap(int currentPlace){
+        if(currentPlace == pits[0] || currentPlace == pits[1]){
+            System.out.println("HAHAHA! YOU FALL IN A PIT!");
+            return false;
+        }else{
+            return true;
+        }
     }
 }
