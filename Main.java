@@ -1,4 +1,3 @@
-
 public class Main {
 
     public static void main(String[] args) {
@@ -21,14 +20,17 @@ public class Main {
                         runGame = false;
                         break;
                     }
-                    
-                    System.out.printf("Bats are in %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
-                     game.getBats()[1], game.getWupmus(), game.getPits()[0], game.getPits()[1]);
+
+                    System.out.printf("Bats are in %d, %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
+                     game.getBats()[1], game.getBats()[2], game.getWupmus(), game.getPits()[0], game.getPits()[1]);
                     // endGame = game.batTrap(game.getPlace());
                     break;
                 case 'S':
-                    // Handle it in future
-                    break;
+                if (!game.shootArrow(game, game.getPlace())) {
+                    runGame = false; // Player has run out of arrows
+                    
+                }
+                break;
                 default:
                     System.out.println("There's no such option.");
                     break;

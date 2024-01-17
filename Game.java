@@ -6,50 +6,65 @@ public class Game {
 
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
+    private int arrows = 5;
     private int[] pits;
     private int Wumpus;
     private int[] bats;
     private int place = (int) (Math.random() * ((20) + 1));
-
 
     public Game() {
         int first = generateRandomNumber();
         int second = generateRandomNumber();
         int bat1 = generateRandomNumber();
         int bat2 = generateRandomNumber();
+        int bat3 = generateRandomNumber();
+        int bat4 = generateRandomNumber();
         Wumpus = generateRandomNumber();
-        
+
         while (second == -1 || first == second || second == place) { // We ensure that pits are different
             second = generateRandomNumber(); // as well as our player doesn't spawn in a pit
         }
-        while(Wumpus == place || Wumpus == second || Wumpus == first)
-            Wumpus = generateRandomNumber(); // Ensure that our player doesn't spawn on Wumpus, and Wumpus doesn't spawn in a pit.
-        while(bat1 == place || bat1 == second || bat1 == first || bat1 == Wumpus)
+        while (Wumpus == place || Wumpus == second || Wumpus == first)
+            Wumpus = generateRandomNumber(); // Ensure that our player doesn't spawn on Wumpus, and Wumpus doesn't spawn
+                                             // in a pit.
+        while (bat1 == place || bat1 == second || bat1 == first || bat1 == Wumpus)
             bat1 = generateRandomNumber();
-        while(bat2 == place || bat2 == second || bat2 == first || bat2 == Wumpus)
+        while (bat2 == place || bat2 == second || bat2 == first || bat2 == Wumpus || bat2 == bat1)
             bat2 = generateRandomNumber();
-        pits = new int[] { first, second };
-        bats = new int[] {bat1, bat2};
-    }
+        while (bat3 == place || bat3 == second || bat3 == first || bat3 == Wumpus || bat3 == bat1 || bat3 == bat2)
+            bat3 = generateRandomNumber();
+        while (bat4 == place || bat4 == second || bat4 == first || bat4 == Wumpus || bat4 == bat1 || bat4 == bat3
+                || bat4 == bat2)
+            bat4 = generateRandomNumber();
 
+        pits = new int[] { first, second };
+        if (generateRandomNumber() <= 10) {
+            bats = new int[] { bat1, bat2, bat3 };
+        } else {
+            bats = new int[] { bat1, bat2, bat3, bat4 };
+        }
+    }
 
     public int getPlace() {
         return this.place;
     }
-    public int[] getBats(){
+
+    public int[] getBats() {
         return this.bats;
     }
-    public int[] getPits(){
+
+    public int[] getPits() {
         return this.pits;
     }
-    public int getWupmus(){
+
+    public int getWupmus() {
         return this.Wumpus;
     }
 
     private int generateRandomNumber() {
-        return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive     
+        return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive
     }
-    
+
     private HashMap<Integer, Integer[]> fullCaves() {
         caves.put(1, new Integer[] { 2, 8, 5 });
         caves.put(2, new Integer[] { 1, 3, 10 });
@@ -96,7 +111,7 @@ public class Game {
 
     public void moveCave(Game game, int currentPlace) {
         boolean validInput = false;
-        
+
         while (!validInput) {
             try {
                 game.locationOutput(currentPlace);
@@ -111,7 +126,6 @@ public class Game {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer.");
-                // Clear the scanner buffer
                 scanner.nextLine();
             }
         }
@@ -128,15 +142,8 @@ public class Game {
 
     public boolean WumpusTrap(int currentPlace) {
         if (currentPlace == Wumpus) {
-            int dieOrNot = generateRandomNumber();
-            if(dieOrNot <= 10){
-                System.out.println("You've got to the Wumpus's cave, and he eat you!");
-                return false;
-            }
-            else{
-                System.out.println("Wampus got scared of your present in your cave and run away");
-                return true;
-            }
+            System.out.println("You've got to the Wumpus's cave, and he eat you!");
+            return false;
         } else {
             return true;
         }
@@ -145,10 +152,10 @@ public class Game {
     public boolean batTrap(int currentPlace) {
         if (currentPlace == bats[0] || currentPlace == bats[1]) {
             this.place = generateRandomNumber();
-            if(this.place == this.Wumpus){
+            if (this.place == this.Wumpus) {
                 System.out.println("Bats brought you just in the mouth of Wumpus, looser!");
                 return false;
-            }else if(this.place == this.pits[0] || this.place == this.pits[1]){
+            } else if (this.place == this.pits[0] || this.place == this.pits[1]) {
                 System.out.println("Bats threw you in a pit and you died miserably. Great job!");
                 Wumpus = generateRandomNumber();
                 return false;
@@ -159,5 +166,43 @@ public class Game {
         } else {
             return true;
         }
+    }
+
+    public boolean shootArrow(Game game, int currentPlace) {
+        System.out.printf("You can shoot in caves number %d, %d, %d%n",
+                fullCaves().get(currentPlace)[0], fullCaves().get(currentPlace)[1], fullCaves().get(currentPlace)[2]);
+
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                int shot = scanner.nextInt();
+
+                if (game.isRightStep(currentPlace, shot)) {
+                    validInput = true;
+                    if (shot == Wumpus) {
+                        System.out.println("You killed the Wumpus, you won!");
+                        return false;
+                    } else {
+                        if (arrows > 1) {
+                            arrows--;
+                        } else {
+                            arrows--;
+                            System.out.println("You've used all of your arrows. Now you're useless. You lost!");
+                            return false;
+                        }
+                        System.out.printf("You have %d arrows left.%n", arrows);
+                        return true; // Player has arrows left
+                    }
+                } else {
+                    System.out.println("WRONG!");
+                    return true; // Player has arrows left
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.nextLine();
+            }
+        }
+        return false;
     }
 }
