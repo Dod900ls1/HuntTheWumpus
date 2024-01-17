@@ -1,5 +1,5 @@
 import java.util.HashMap;
-
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Game {
@@ -95,17 +95,24 @@ public class Game {
     }
 
     public void moveCave(Game game, int currentPlace) {
-        boolean validInput = true;
-        while (validInput) {
-            game.locationOutput(currentPlace);
-            int cave = scanner.nextInt();
+        boolean validInput = false;
+        
+        while (!validInput) {
+            try {
+                game.locationOutput(currentPlace);
+                int cave = scanner.nextInt();
 
-            if (game.isRightStep(currentPlace, cave)) {
-                validInput = false;
-                game.locationOutput(cave);
-                place = cave;
-            } else {
-                System.out.println("WRONG!");
+                if (game.isRightStep(currentPlace, cave)) {
+                    validInput = true;
+                    game.locationOutput(cave);
+                    place = cave;
+                } else {
+                    System.out.println("WRONG!");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter an integer.");
+                // Clear the scanner buffer
+                scanner.nextLine();
             }
         }
     }
