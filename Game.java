@@ -1,32 +1,53 @@
 import java.util.HashMap;
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Game {
-    private Random random = new Random();
+
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
     private static Scanner scanner = new Scanner(System.in);
     private int[] pits;
+    private int Wumpus;
+    private int[] bats;
     private int place = (int) (Math.random() * ((20) + 1));
+
 
     public Game() {
         int first = generateRandomNumber();
         int second = generateRandomNumber();
-
+        int bat1 = generateRandomNumber();
+        int bat2 = generateRandomNumber();
+        Wumpus = generateRandomNumber();
+        
         while (second == -1 || first == second || second == place) { // We ensure that pits are different
-            second = generateRandomNumber();                         // as well as our player doesn't spawn in a pit
+            second = generateRandomNumber(); // as well as our player doesn't spawn in a pit
         }
-
-        pits = new int[]{first, second};
+        while(Wumpus == place || Wumpus == second || Wumpus == first)
+            Wumpus = generateRandomNumber(); // Ensure that our player doesn't spawn on Wumpus, and Wumpus doesn't spawn in a pit.
+        while(bat1 == place || bat1 == second || bat1 == first || bat1 == Wumpus)
+            bat1 = generateRandomNumber();
+        while(bat2 == place || bat2 == second || bat2 == first || bat2 == Wumpus)
+            bat2 = generateRandomNumber();
+        pits = new int[] { first, second };
+        bats = new int[] {bat1, bat2};
     }
 
-    
-    public int getPlace(){
+
+    public int getPlace() {
         return this.place;
+    }
+    public int[] getBats(){
+        return this.bats;
+    }
+    public int[] getPits(){
+        return this.pits;
+    }
+    public int getWupmus(){
+        return this.Wumpus;
     }
 
     private int generateRandomNumber() {
-        return (int) (Math.random() * (20 + 1));
+        return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive     
     }
     
     private HashMap<Integer, Integer[]> fullCaves() {
@@ -53,7 +74,6 @@ public class Game {
 
         return caves;
     }
-    
 
     public void locationOutput(int index) {
         System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", index,
@@ -68,8 +88,6 @@ public class Game {
         }
         return false;
     }
-
-
 
     public char getUserInput() {
         System.out.println("Shoot = S, Walk to another cave = W");
@@ -92,11 +110,46 @@ public class Game {
         }
     }
 
-    public boolean pitTrap(int currentPlace){
-        if(currentPlace == pits[0] || currentPlace == pits[1]){
+    public boolean pitTrap(int currentPlace) {
+        if (currentPlace == pits[0] || currentPlace == pits[1]) {
             System.out.println("HAHAHA! YOU FALL IN A PIT AND DIE!");
             return false;
-        }else{
+        } else {
+            return true;
+        }
+    }
+
+    public boolean WumpusTrap(int currentPlace) {
+        if (currentPlace == Wumpus) {
+            int dieOrNot = generateRandomNumber();
+            if(dieOrNot <= 10){
+                System.out.println("You've got to the Wumpus's cave, and he eat you!");
+                return false;
+            }
+            else{
+                System.out.println("Wampus got scared of your present in your cave and run away");
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    public boolean batTrap(int currentPlace) {
+        if (currentPlace == bats[0] || currentPlace == bats[1]) {
+            this.place = generateRandomNumber();
+            if(this.place == this.Wumpus){
+                System.out.println("Bats brought you just in the mouth of Wumpus, looser!");
+                return false;
+            }else if(this.place == this.pits[0] || this.place == this.pits[1]){
+                System.out.println("Bats threw you in a pit and you died miserably. Great job!");
+                Wumpus = generateRandomNumber();
+                return false;
+            }
+            System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", this.place);
+            locationOutput(this.place);
+            return true;
+        } else {
             return true;
         }
     }

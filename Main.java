@@ -1,20 +1,30 @@
-import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Game game = new Game();
-        boolean endGame = true;
-        
+        boolean runGame = true;
 
         // Main loop
-        while (endGame) {
+        while (runGame) {
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
                     game.moveCave(game, game.getPlace());
-                    endGame = game.pitTrap(game.getPlace());
+                    if(!game.pitTrap(game.getPlace())){
+                        runGame = false; // Checks if we got in a pit
+                        break;
+                    } else if(!game.WumpusTrap(game.getPlace())){
+                        runGame = false; // Checks if we got in a Wumpus cave
+                        break;
+                    } else if(!game.batTrap(game.getPlace())){
+                        runGame = false;
+                        break;
+                    }
+                    
+                    System.out.printf("Bats are in %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
+                     game.getBats()[1], game.getWupmus(), game.getPits()[0], game.getPits()[1]);
+                    // endGame = game.batTrap(game.getPlace());
                     break;
                 case 'S':
                     // Handle it in future
