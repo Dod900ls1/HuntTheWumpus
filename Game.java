@@ -221,45 +221,60 @@ public class Game {
         }
     }
 
-    
+    private boolean killWumpus(int shot){
+        if(shot == Wumpus){
+            System.out.println("You've killed the Wumpus, you won!");
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private boolean arrowCounter(int shot){
+        if (arrows > 1) {
+            arrows--;
+            System.out.printf("You have %d arrows left.%n", arrows);
+            return true;
+        } else {
+            arrows--;
+            System.out.println("You've used all of your arrows. Now you're useless. You lost!");
+            return false;
+        }
+    }
+
+    private boolean scareWumpus(int shot, int currentPlace){
+        if (fullCaves().get(currentPlace)[0] == Wumpus || fullCaves().get(currentPlace)[1] == Wumpus
+        || fullCaves().get(currentPlace)[2] == Wumpus){
+            this.Wumpus = generateRandomNumber();
+            if (this.Wumpus == this.place) {
+                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
+                return false;
+            }else{
+                System.out.println("You missed. Wumpus heared you. He dislocated to other cave.");
+            }
+        }
+        return true;
+    }
     public boolean shootArrow(Game game, int currentPlace) {
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 fullCaves().get(currentPlace)[0], fullCaves().get(currentPlace)[1], fullCaves().get(currentPlace)[2]);
 
         boolean validInput = false;
-
+        
         while (!validInput) {
             try {
                 int shot = scanner.nextInt();
 
                 if (game.isRightStep(currentPlace, shot)) {
                     validInput = true;
-                    // sadasdasd
+                    
                     killBat(shot);
-                    if (shot == Wumpus) {
-                        System.out.println("You killed the Wumpus, you won!");
+                    if(!killWumpus(shot))
                         return false;
-                    } else {
-                        if (arrows > 1) {
-                            arrows--;
-                        } else {
-                            arrows--;
-                            System.out.println("You've used all of your arrows. Now you're useless. You lost!");
-                            return false;
-                        }
-                        System.out.printf("You have %d arrows left.%n", arrows);
-                        if (fullCaves().get(currentPlace)[0] == Wumpus || fullCaves().get(currentPlace)[1] == Wumpus
-                        || fullCaves().get(currentPlace)[2] == Wumpus){
-                            this.Wumpus = generateRandomNumber();
-                            if (this.Wumpus == this.place) {
-                                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
-                                return false;
-                            }else{
-                                System.out.println("You missed. Wumpus heared you. He dislocated to other cave.");
-                            }
-                        }
-                        return true; // Player has arrows left
-                    }
+                    if(!arrowCounter(shot))
+                        return false;
+                    if(!scareWumpus(shot, currentPlace))
+                        return false;
                 } else {
                     System.out.println("WRONG!");
                     return true; // Player has arrows left
@@ -269,6 +284,6 @@ public class Game {
                 scanner.nextLine();
             }
         }
-        return false;
+        return true;
     }
 }
