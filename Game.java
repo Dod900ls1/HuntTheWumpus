@@ -45,6 +45,11 @@ public class Game {
         }
     }
 
+    
+    /** 
+     * get place does X
+     * @return int
+     */
     public int getPlace() {
         return this.place;
     }
@@ -104,6 +109,36 @@ public class Game {
         return false;
     }
 
+    public void nextToWumpus(int currentPlace) {
+        if (fullCaves().get(currentPlace)[0] == Wumpus || fullCaves().get(currentPlace)[1] == Wumpus
+                || fullCaves().get(currentPlace)[2] == Wumpus) {
+            System.out.println("You smell the Wumpus in one of neighbour caves!");
+            return;
+        } else {
+            return;
+        }
+    }
+
+    public void nextToBats(int currentPlace) {
+        for (int i : bats) {
+            if (fullCaves().get(currentPlace)[0] == i || fullCaves().get(currentPlace)[1] == i
+                    || fullCaves().get(currentPlace)[2] == i) {
+                System.out.println("You can hear Bats near you!");
+                return;
+            }
+        }
+
+    }
+    public void nextToPits(int currentPlace){
+        for (int i : pits) {
+            if (fullCaves().get(currentPlace)[0] == i || fullCaves().get(currentPlace)[1] == i
+                    || fullCaves().get(currentPlace)[2] == i) {
+                System.out.println("You can feel the blowing of wind. Pit is near you!");
+                return;
+            }
+        }
+    }
+
     public char getUserInput() {
         System.out.println("Shoot = S, Walk to another cave = W");
         return scanner.next().charAt(0);
@@ -122,7 +157,7 @@ public class Game {
                     game.locationOutput(cave);
                     place = cave;
                 } else {
-                    System.out.println("WRONG!");
+                    System.out.println("Invalid input, you can walk only to neighbour caves!");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer.");
@@ -168,6 +203,25 @@ public class Game {
         }
     }
 
+    private static int indexOf(int[] arr, int element){
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == element){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void killBat(int shot){
+        for (int i : bats) {
+            if(shot == i){
+                System.out.println("You killed the bat!");
+                bats[indexOf(bats, shot)] = -1; // Get rid of this bat
+            }
+        }
+    }
+
+    
     public boolean shootArrow(Game game, int currentPlace) {
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 fullCaves().get(currentPlace)[0], fullCaves().get(currentPlace)[1], fullCaves().get(currentPlace)[2]);
@@ -180,6 +234,8 @@ public class Game {
 
                 if (game.isRightStep(currentPlace, shot)) {
                     validInput = true;
+                    // sadasdasd
+                    killBat(shot);
                     if (shot == Wumpus) {
                         System.out.println("You killed the Wumpus, you won!");
                         return false;
@@ -192,6 +248,16 @@ public class Game {
                             return false;
                         }
                         System.out.printf("You have %d arrows left.%n", arrows);
+                        if (fullCaves().get(currentPlace)[0] == Wumpus || fullCaves().get(currentPlace)[1] == Wumpus
+                        || fullCaves().get(currentPlace)[2] == Wumpus){
+                            this.Wumpus = generateRandomNumber();
+                            if (this.Wumpus == this.place) {
+                                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
+                                return false;
+                            }else{
+                                System.out.println("You missed. Wumpus heared you. He dislocated to other cave.");
+                            }
+                        }
                         return true; // Player has arrows left
                     }
                 } else {

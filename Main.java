@@ -6,6 +6,10 @@ public class Main {
 
         // Main loop
         while (runGame) {
+            game.getPlace();
+            game.nextToWumpus(game.getPlace());
+            game.nextToBats(game.getPlace());
+            game.nextToPits(game.getPlace());
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
@@ -19,7 +23,7 @@ public class Main {
                     } else if(!game.batTrap(game.getPlace())){
                         runGame = false;
                         break;
-                    }
+                    } 
 
                     System.out.printf("Bats are in %d, %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
                      game.getBats()[1], game.getBats()[2], game.getWupmus(), game.getPits()[0], game.getPits()[1]);
