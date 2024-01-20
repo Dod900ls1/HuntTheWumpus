@@ -25,8 +25,8 @@ public class Main {
                         break;
                     } 
 
-                    System.out.printf("Bats are in %d, %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
-                     game.getBats()[1], game.getBats()[2], game.getWupmus(), game.getPits()[0], game.getPits()[1]);
+                    // System.out.printf("Bats are in %d, %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
+                    //  game.getBats()[1], game.getBats()[2], game.getWumpus(), game.getPits()[0], game.getPits()[1]);
                     // endGame = game.batTrap(game.getPlace());
                     break;
                 case 'S':
