@@ -1,14 +1,16 @@
 public class Main {
 
     public static void main(String[] args) {
-        Game game = new Game();
+
         boolean runGame = true;
         Player player = new Player();
+        Wumpus wumpus = new Wumpus();
+        Game game = new Game(wumpus);
 
         // Main loop
         while (runGame) {
             player.getPlace();
-            player.nextToWumpus(player.getPlace(),game);
+            player.nextToWumpus(player.getPlace(),game,wumpus);
             player.nextToBats(player.getPlace(),game);
             player.nextToPits(player.getPlace(),game);
             char shotOrWalk = game.getUserInput();
@@ -18,7 +20,7 @@ public class Main {
                     if(!game.pitTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a pit
                         break;
-                    } else if(!game.WumpusTrap(player.getPlace())){
+                    } else if(!wumpus.WumpusTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a Wumpus cave
                         break;
                     } else if(!game.batTrap(player.getPlace())){
@@ -31,7 +33,7 @@ public class Main {
                     // endGame = game.batTrap(player.getPlace());
                     break;
                 case 'S':
-                if (!player.shootArrow(game, player.getPlace())) {
+                if (!player.shootArrow(game, player.getPlace(), wumpus)) {
                     runGame = false; // Player has run out of arrows
                     
                 }

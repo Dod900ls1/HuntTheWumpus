@@ -18,7 +18,6 @@ public class Game {
 
     // Arrays to store pit locations, bat locations, and the Wumpus location
     private int[] pits;
-    private int Wumpus;
     private int[] bats;
 
     // // Randomly generated starting cave
@@ -29,10 +28,10 @@ public class Game {
     /**
      * Constructor to initialize the game state
      */
-    public Game() {
+    public Game(Wumpus wumpus) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
         pits = generateUniqueLocations(2);
-        Wumpus = generateUniqueLocation();
+        wumpus.setWumpus(generateUniqueLocation());
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
@@ -45,15 +44,6 @@ public class Game {
      */
     public int[] getPits(){
         return pits;
-    }
-
-    /**
-     * Returns Array of location of the Wumpus.
-     * 
-     * @return wumpus The int of wumpus location
-     */
-    public int getWumpus(){
-        return Wumpus;
     }
 
     /**
@@ -96,7 +86,7 @@ public class Game {
      * Method to generate random number between 1 and 20 (inclusive)
      * @return int
      */
-    private int generateRandomNumber() {
+    public int generateRandomNumber() {
         return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive
     }
 
@@ -186,21 +176,6 @@ public class Game {
     }
 
     /**
-     * Checks if player entered Wumpus cave. Terminate the program if he is.
-     * 
-     * @param currentPlace
-     * @return
-     */
-    public boolean WumpusTrap(int currentPlace) {
-        if (currentPlace == Wumpus) {
-            System.out.println("You've got to the Wumpus's cave, and he eat you!");
-            return false;
-        }
-        return true;
-
-    }
-
-    /**
      * Check if the player encounters bats. If bats brought gamer to a pit or to
      * Wumpus, method would terminate the program.
      * 
@@ -215,7 +190,7 @@ public class Game {
                 return false;
             } else if (this.place == this.pits[0] || this.place == this.pits[1]) {
                 System.out.println("Bats threw you in a pit and you died miserably. Great job!");
-                Wumpus = generateRandomNumber();
+                // Wumpus = generateRandomNumber();
                 return false;
             }
             System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", this.place);
@@ -224,28 +199,5 @@ public class Game {
         } else {
             return true;
         }
-    }
-
-    /**
-     * If player shoot an arrow next to a Wumpus cave, but didn't kill it - Wumpus
-     * disclocates to another cave.
-     * 
-     * @param shot
-     * @param currentPlace
-     * @return boolean
-     */
-    public boolean scareWumpus(int shot, int currentPlace) {
-        if (generateCaveConnections().get(currentPlace)[0] == Wumpus
-                || generateCaveConnections().get(currentPlace)[1] == Wumpus
-                || generateCaveConnections().get(currentPlace)[2] == Wumpus) {
-            this.Wumpus = generateRandomNumber();
-            if (this.Wumpus == this.place) {
-                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
-                return false;
-            } else {
-                System.out.println("You missed. Wumpus heared you. He dislocated to other cave.");
-            }
-        }
-        return true;
     }
 }

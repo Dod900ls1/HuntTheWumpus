@@ -64,10 +64,10 @@ public class Player {
      * 
      * @param currentPlace
      */
-    public void nextToWumpus(int currentPlace, Game game) {
-        if (game.generateCaveConnections().get(currentPlace)[0] == game.getWumpus()
-                || game.generateCaveConnections().get(currentPlace)[1] == game.getWumpus()
-                || game.generateCaveConnections().get(currentPlace)[2] == game.getWumpus()) {
+    public void nextToWumpus(int currentPlace, Game game, Wumpus wumpus) {
+        if (game.generateCaveConnections().get(currentPlace)[0] == wumpus.getWumpus()
+                || game.generateCaveConnections().get(currentPlace)[1] == wumpus.getWumpus()
+                || game.generateCaveConnections().get(currentPlace)[2] == wumpus.getWumpus()) {
             System.out.println("You smell the Wumpus in one of neighbour caves!");
             return;
         } else {
@@ -144,8 +144,8 @@ public class Player {
      * @param shot
      * @return boolean
      */
-    private boolean killWumpus(int shot,Game game) {
-        if (shot == game.getWumpus()) {
+    private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
+        if (shot == wumpus.getWumpus()) {
             System.out.println("You've killed the Wumpus, you won!");
             return false;
         } else {
@@ -180,7 +180,7 @@ public class Player {
      * @param currentPlace
      * @return boolean
      */
-    public boolean shootArrow(Game game, int currentPlace) {
+    public boolean shootArrow(Game game, int currentPlace, Wumpus wumpus) {
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 game.generateCaveConnections().get(currentPlace)[0], game.generateCaveConnections().get(currentPlace)[1],
                 game.generateCaveConnections().get(currentPlace)[2]);
@@ -195,11 +195,11 @@ public class Player {
                     validInput = true;
 
                     killBat(shot,game);
-                    if (!killWumpus(shot,game))
+                    if (!killWumpus(shot,game,wumpus))
                         return false;
                     if (!arrowCounter(shot))
                         return false;
-                    if (!game.scareWumpus(shot, currentPlace))
+                    if (!wumpus.scareWumpus(shot, currentPlace,game))
                         return false;
                 } else {
                     System.out.println("You can shot only in adjecent caves.");
