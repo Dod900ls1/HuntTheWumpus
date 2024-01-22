@@ -46,6 +46,10 @@ public class Game {
         return pits[index];
     }
 
+    public void setPits(int[] pits) {
+        this.pits = pits;
+    }
+
     public int[] getPitsArr(){
        return pits; 
     }
