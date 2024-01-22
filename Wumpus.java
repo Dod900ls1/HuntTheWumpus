@@ -1,18 +1,18 @@
 public class Wumpus {
 
-    private int wumpus;
+    private int wumpusLocation;
 
     /**
      * Returns Array of location of the Wumpus.
      * 
-     * @return wumpus The int of wumpus location
+     * @return wumpusLocation The int of wumpusLocation location
      */
-    public int getWumpus(){
-        return wumpus;
+    public int getWumpusLoc(){
+        return wumpusLocation;
     }
 
-    public void setWumpus(int wumpus){
-        this.wumpus = wumpus;
+    public void setWumpusLoc(int wumpusLocation){
+        this.wumpusLocation = wumpusLocation;
     }
 
     
@@ -23,7 +23,7 @@ public class Wumpus {
      * @return
      */
     public boolean WumpusTrap(int currentPlace) {
-        if (currentPlace == wumpus) {
+        if (currentPlace == wumpusLocation) {
             System.out.println("You've got to the Wumpus's cave, and he eat you!");
             return false;
         }
@@ -40,11 +40,11 @@ public class Wumpus {
      * @return boolean
      */
     public boolean scareWumpus(int shot, int currentPlace, Game game) {
-        if (game.generateCaveConnections().get(currentPlace)[0] == wumpus
-                || game.generateCaveConnections().get(currentPlace)[1] == wumpus
-                || game.generateCaveConnections().get(currentPlace)[2] == wumpus) {
-            wumpus = game.generateRandomNumber();
-            if (wumpus == currentPlace) {  //Used to be this.place
+        if (game.generateCaveConnections().get(currentPlace)[0] == wumpusLocation
+                || game.generateCaveConnections().get(currentPlace)[1] == wumpusLocation
+                || game.generateCaveConnections().get(currentPlace)[2] == wumpusLocation) {
+            wumpusLocation = game.generateRandomNumber();
+            if (wumpusLocation == currentPlace) {  //Used to be this.place
                 System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
                 return false;
             } else {

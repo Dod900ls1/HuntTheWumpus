@@ -65,9 +65,9 @@ public class Player {
      * @param currentPlace
      */
     public void nextToWumpus(Game game, Wumpus wumpus) {
-        if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpus()
-                || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpus()
-                || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpus()) {
+        if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
+                || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
+                || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc()) {
             System.out.println("You smell the Wumpus in one of neighbour caves!");
             return;
         } else {
@@ -146,7 +146,7 @@ public class Player {
      * @return boolean
      */
     private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
-        if (shot == wumpus.getWumpus()) {
+        if (shot == wumpus.getWumpusLoc()) {
             System.out.println("You've killed the Wumpus, you won!");
             return false;
         } else {

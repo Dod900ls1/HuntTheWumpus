@@ -10,7 +10,7 @@ public class Bat {
     public boolean batTrap(int currentPlace,Game game,Wumpus wumpus,Player player) {
         if (currentPlace == game.getBats(0) || currentPlace == game.getBats(1)) {
             currentPlace = game.generateRandomNumber();
-            if (currentPlace == wumpus.getWumpus()) {
+            if (currentPlace == wumpus.getWumpusLoc()) {
                 System.out.println("Bats brought you just in the mouth of Wumpus, loser!");
                 return false;
             } else if (currentPlace == game.getPits(0) || currentPlace == game.getPits(1)) {

@@ -31,7 +31,7 @@ public class Game {
     public Game(Wumpus wumpus) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
         pits = generateUniqueLocations(2);
-        wumpus.setWumpus(generateUniqueLocation());
+        wumpus.setWumpusLoc(generateUniqueLocation());
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
