@@ -81,7 +81,7 @@ public class Player {
      * @param currentPlace
      */
     public void nextToBats(int currentPlace, Game game) {
-        for (int i : game.getBats()) {
+        for (int i : game.getBatsArr()) {
             if (game.generateCaveConnections().get(currentPlace)[0] == i
                     || game.generateCaveConnections().get(currentPlace)[1] == i
                     || game.generateCaveConnections().get(currentPlace)[2] == i) {
@@ -97,7 +97,7 @@ public class Player {
      * @param currentPlace
      */
     public void nextToPits(int currentPlace, Game game) {
-        for (int i : game.getPits()) {
+        for (int i : game.getPitsArr()) {
             if (game.generateCaveConnections().get(currentPlace)[0] == i
                     || game.generateCaveConnections().get(currentPlace)[1] == i
                     || game.generateCaveConnections().get(currentPlace)[2] == i) {
@@ -129,10 +129,11 @@ public class Player {
      * @param shot
      */
     private void killBat(int shot,Game game) {
-        for (int i : game.getBats()) {
+        for (int i : game.getBatsArr()) {
             if (shot == i) {
                 System.out.println("You killed the bat!");
-                game.getBats()[indexOf(game.getBats(), shot)] = -1; // Get rid of this bat
+                //LOOK INTO SHORTENING THIS
+                game.setBats(indexOf(game.getBatsArr(), shot),-1); // Get rid of this bat
             }
         }
     }

@@ -1,3 +1,4 @@
+import java.nio.channels.Pipe;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
@@ -42,8 +43,12 @@ public class Game {
      * 
      * @return pits The array of pit locations
      */
-    public int[] getPits(){
-        return pits;
+    public int getPits(int index){
+        return pits[index];
+    }
+
+    public int[] getPitsArr(){
+       return pits; 
     }
 
     /**
@@ -51,8 +56,16 @@ public class Game {
      * 
      * @return bats The array of bat locations
      */
-    public int[] getBats(){
-        return pits;
+    public int getBats(int index){
+        return bats[index];
+    }
+
+    public int[] getBatsArr(){
+        return bats;
+    }
+
+    public void setBats(int index,int newVal){
+        bats[index] = newVal;
     }
 
     /**
@@ -170,32 +183,6 @@ public class Game {
         if (currentPlace == pits[0] || currentPlace == pits[1]) {
             System.out.println("HAHAHA! YOU FALL IN A PIT AND DIE!");
             return false;
-        } else {
-            return true;
-        }
-    }
-
-    /**
-     * Check if the player encounters bats. If bats brought gamer to a pit or to
-     * Wumpus, method would terminate the program.
-     * 
-     * @param currentPlace
-     * @return
-     */
-    public boolean batTrap(int currentPlace) {
-        if (currentPlace == bats[0] || currentPlace == bats[1]) {
-            this.place = generateRandomNumber();
-            if (this.place == this.Wumpus) {
-                System.out.println("Bats brought you just in the mouth of Wumpus, loser!");
-                return false;
-            } else if (this.place == this.pits[0] || this.place == this.pits[1]) {
-                System.out.println("Bats threw you in a pit and you died miserably. Great job!");
-                // Wumpus = generateRandomNumber();
-                return false;
-            }
-            System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", this.place);
-            locationOutput(this.place);
-            return true;
         } else {
             return true;
         }

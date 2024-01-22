@@ -5,6 +5,7 @@ public class Main {
         boolean runGame = true;
         Player player = new Player();
         Wumpus wumpus = new Wumpus();
+        Bat bat = new Bat();
         Game game = new Game(wumpus);
 
         // Main loop
@@ -23,7 +24,7 @@ public class Main {
                     } else if(!wumpus.WumpusTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a Wumpus cave
                         break;
-                    } else if(!game.batTrap(player.getPlace())){
+                    } else if(!bat.batTrap(player.getPlace(),game,wumpus,player)){
                         runGame = false;
                         break;
                     } 
