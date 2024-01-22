@@ -27,6 +27,8 @@ public class Game {
 
     /**
      * Constructor to initialize the game state
+     * 
+     * @param wumpus The object needed to access wumpus methods
      */
     public Game(Wumpus wumpus) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
@@ -38,31 +40,51 @@ public class Game {
     }
 
     /**
-     * Returns Array of location of Pits.
+     * Returns individual location of pit.
      * 
-     * @return pits The array of pit locations
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * 
+     * @return The individual pit location
      */
     public int getPits(int index){
         return pits[index];
     }
-
+    
+    /**
+     * Returns Array of location of Pits.
+     * 
+     * @return The array of pit locations
+     */
     public int[] getPitsArr(){
        return pits; 
     }
 
     /**
-     * Returns Array of location of the bats.
+     * Returns individual location of bat.
      * 
-     * @return bats The array of bat locations
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * 
+     * @return The individual bat location
      */
     public int getBats(int index){
         return bats[index];
     }
 
+    /**
+     * Returns Array of location of the bats.
+     * 
+     * @return The array of bat locations
+     */
     public int[] getBatsArr(){
         return bats;
     }
 
+    /**
+     * Sets the location of an individual bat.
+     * 
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param newVal Used as the new location value for bats
+     */
     public void setBats(int index,int newVal){
         bats[index] = newVal;
     }
@@ -83,7 +105,7 @@ public class Game {
     /**
      * Generates a set of unique locations that has not been used in the game.
      * 
-     * @param count
+     * @param count to indicate the number of unique locations
      * @return An array of unique locations
      */
     private int[] generateUniqueLocations(int count) {
@@ -96,7 +118,7 @@ public class Game {
 
     /**
      * Method to generate random number between 1 and 20 (inclusive)
-     * @return int
+     * @return the randomised number
      */
     public int generateRandomNumber() {
         return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive
@@ -105,7 +127,7 @@ public class Game {
     /**
      * Method to define cave connections and return the HashMap
      * Caves form a dodecahedron.
-     * @return HashMap<Integer, Integer[]>
+     * @return HashMap<Integer, Integer[]> which is the nodes that can be accessed
      */
     public HashMap<Integer, Integer[]> generateCaveConnections() {
         caves.put(1, new Integer[] { 2, 8, 5 });
@@ -136,7 +158,7 @@ public class Game {
     /**
      * Method to get user input for the next move
      * 
-     * @return
+     * @return the user input
      */
     public char getUserInput() {
         System.out.println("Shoot = S, Walk to another cave = W");
@@ -146,10 +168,10 @@ public class Game {
     /**
      * Method to move to a new cave based on user input
      * 
-     * @param game
-     * @param currentPlace
+     * @param game the object needed to access Game class methods
+     * @param player the object needed to access Player class methods
      */
-    public void moveCave(Game game, int currentPlace, Player player) {
+    public void moveCave(Game game, Player player) {
         boolean validInput = false;
 
         while (!validInput) {
@@ -176,7 +198,7 @@ public class Game {
      * Check if player got to a pit trap. Terminate the program if he did.
      * 
      * @param currentPlace
-     * @return
+     * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
         if (currentPlace == pits[0] || currentPlace == pits[1]) {

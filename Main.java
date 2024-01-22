@@ -18,7 +18,7 @@ public class Main {
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
-                    game.moveCave(game, player.getPlace(), player);
+                    game.moveCave(game, player);
                     if(!game.pitTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a pit
                         break;
