@@ -10,7 +10,7 @@ public class Player {
     private int arrows = 5;
 
     // Randomly generated starting cave
-    private int place = (int) (Math.random() * ((20) + 1));
+    private int playerLocation = (int) (Math.random() * ((20) + 1));
 
     /**
      * Get the current player's location
@@ -18,16 +18,16 @@ public class Player {
      * @return int
      */
     public int getPlace() {
-        return this.place;
+        return this.playerLocation;
     }
 
     /**
      * sets the current player's location
      * 
-     * @param place
+     * @param playerLocation
      */
-    public void setPlace(int place){
-        this.place = place;
+    public void setPlace(int playerLocation){
+        this.playerLocation = playerLocation;
     }
 
     /**
@@ -37,9 +37,9 @@ public class Player {
      * @param game
      */
     public void locationOutput(Game game) {
-        System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", place,
-                game.generateCaveConnections().get(place)[0], game.generateCaveConnections().get(place)[1],
-                game.generateCaveConnections().get(place)[2]);
+        System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", playerLocation,
+                game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
+                game.generateCaveConnections().get(playerLocation)[2]);
     }
 
     /**
@@ -51,7 +51,7 @@ public class Player {
      */
     public boolean isRightStep(int input, Game game) {
         // Check if the input cave is among the connected caves
-        for (int i : game.generateCaveConnections().get(place)) {
+        for (int i : game.generateCaveConnections().get(playerLocation)) {
             if (i == input) {
                 return true;
             }
@@ -65,9 +65,9 @@ public class Player {
      * @param currentPlace
      */
     public void nextToWumpus(Game game, Wumpus wumpus) {
-        if (game.generateCaveConnections().get(place)[0] == wumpus.getWumpus()
-                || game.generateCaveConnections().get(place)[1] == wumpus.getWumpus()
-                || game.generateCaveConnections().get(place)[2] == wumpus.getWumpus()) {
+        if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpus()
+                || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpus()
+                || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpus()) {
             System.out.println("You smell the Wumpus in one of neighbour caves!");
             return;
         } else {
@@ -82,9 +82,9 @@ public class Player {
      */
     public void nextToBats(Game game) {
         for (int i : game.getBatsArr()) {
-            if (game.generateCaveConnections().get(place)[0] == i
-                    || game.generateCaveConnections().get(place)[1] == i
-                    || game.generateCaveConnections().get(place)[2] == i) {
+            if (game.generateCaveConnections().get(playerLocation)[0] == i
+                    || game.generateCaveConnections().get(playerLocation)[1] == i
+                    || game.generateCaveConnections().get(playerLocation)[2] == i) {
                 System.out.println("You can hear Bats near you!");
                 return;
             }
@@ -98,9 +98,9 @@ public class Player {
      */
     public void nextToPits(Game game) {
         for (int i : game.getPitsArr()) {
-            if (game.generateCaveConnections().get(place)[0] == i
-                    || game.generateCaveConnections().get(place)[1] == i
-                    || game.generateCaveConnections().get(place)[2] == i) {
+            if (game.generateCaveConnections().get(playerLocation)[0] == i
+                    || game.generateCaveConnections().get(playerLocation)[1] == i
+                    || game.generateCaveConnections().get(playerLocation)[2] == i) {
                 System.out.println("You can feel the blowing of wind. Pit is near you!");
                 return;
             }
@@ -183,8 +183,8 @@ public class Player {
      */
     public boolean shootArrow(Game game,Wumpus wumpus) {
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
-                game.generateCaveConnections().get(place)[0], game.generateCaveConnections().get(place)[1],
-                game.generateCaveConnections().get(place)[2]);
+                game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
+                game.generateCaveConnections().get(playerLocation)[2]);
 
         boolean validInput = false;
 
@@ -200,7 +200,7 @@ public class Player {
                         return false;
                     if (!arrowCounter(shot))
                         return false;
-                    if (!wumpus.scareWumpus(shot, place,game))
+                    if (!wumpus.scareWumpus(shot, playerLocation,game))
                         return false;
                 } else {
                     System.out.println("You can shot only in adjecent caves.");
