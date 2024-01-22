@@ -13,16 +13,16 @@ public class Game {
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 
-    // Initial number of arrows
-    private int arrows = 5;
+    // // Initial number of arrows
+    // private int arrows = 5;
 
     // Arrays to store pit locations, bat locations, and the Wumpus location
     private int[] pits;
     private int Wumpus;
     private int[] bats;
 
-    // Randomly generated starting cave
-    private int place = (int) (Math.random() * ((20) + 1));
+    // // Randomly generated starting cave
+    // private int place = (int) (Math.random() * ((20) + 1));
 
     private Set<Integer> usedLocations = new HashSet<>();
 
@@ -66,15 +66,6 @@ public class Game {
     }
 
     /**
-     * Get the current player's location
-     * 
-     * @return int
-     */
-    public int getPlace() {
-        return this.place;
-    }
-
-    /**
      * Method to generate random number between 1 and 20 (inclusive)
      * @return int
      */
@@ -87,7 +78,7 @@ public class Game {
      * Caves form a dodecahedron.
      * @return HashMap<Integer, Integer[]>
      */
-    private HashMap<Integer, Integer[]> generateCaveConnections() {
+    public HashMap<Integer, Integer[]> generateCaveConnections() {
         caves.put(1, new Integer[] { 2, 8, 5 });
         caves.put(2, new Integer[] { 1, 3, 10 });
         caves.put(3, new Integer[] { 2, 12, 4 });
@@ -112,49 +103,49 @@ public class Game {
         return caves;
     }
 
-    /**
-     * Method to display current location and available caves
-     * 
-     * @param index
-     */
-    public void locationOutput(int index) {
-        System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", index,
-                generateCaveConnections().get(index)[0], generateCaveConnections().get(index)[1],
-                generateCaveConnections().get(index)[2]);
-    }
+    // /**
+    //  * Method to display current location and available caves
+    //  * 
+    //  * @param index
+    //  */
+    // public void locationOutput(int index) {
+    //     System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", index,
+    //             generateCaveConnections().get(index)[0], generateCaveConnections().get(index)[1],
+    //             generateCaveConnections().get(index)[2]);
+    // }
 
-    /**
-     * Method to check if the step made by player is valid.
-     * 
-     * @param index
-     * @param input
-     * @return boolean
-     */
-    public boolean isRightStep(int index, int input) {
-        // Check if the input cave is among the connected caves
-        for (int i : generateCaveConnections().get(index)) {
-            if (i == input) {
-                return true;
-            }
-        }
-        return false;
-    }
+    // /**
+    //  * Method to check if the step made by player is valid.
+    //  * 
+    //  * @param index
+    //  * @param input
+    //  * @return boolean
+    //  */
+    // public boolean isRightStep(int index, int input) {
+    //     // Check if the input cave is among the connected caves
+    //     for (int i : generateCaveConnections().get(index)) {
+    //         if (i == input) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    /**
-     * Methods to inform the player about the proximity of the Wumpus
-     * 
-     * @param currentPlace
-     */
-    public void nextToWumpus(int currentPlace) {
-        if (generateCaveConnections().get(currentPlace)[0] == Wumpus
-                || generateCaveConnections().get(currentPlace)[1] == Wumpus
-                || generateCaveConnections().get(currentPlace)[2] == Wumpus) {
-            System.out.println("You smell the Wumpus in one of neighbour caves!");
-            return;
-        } else {
-            return;
-        }
-    }
+    // /**
+    //  * Methods to inform the player about the proximity of the Wumpus
+    //  * 
+    //  * @param currentPlace
+    //  */
+    // public void nextToWumpus(int currentPlace) {
+    //     if (generateCaveConnections().get(currentPlace)[0] == Wumpus
+    //             || generateCaveConnections().get(currentPlace)[1] == Wumpus
+    //             || generateCaveConnections().get(currentPlace)[2] == Wumpus) {
+    //         System.out.println("You smell the Wumpus in one of neighbour caves!");
+    //         return;
+    //     } else {
+    //         return;
+    //     }
+    // }
 
     /**
      * Methods to inform the player about the proximity of the bats
@@ -205,18 +196,18 @@ public class Game {
      * @param game
      * @param currentPlace
      */
-    public void moveCave(Game game, int currentPlace) {
+    public void moveCave(Game game, int currentPlace, Player player) {
         boolean validInput = false;
 
         while (!validInput) {
             try {
-                game.locationOutput(currentPlace);
+                player.locationOutput(currentPlace, game);
                 int cave = scanner.nextInt();
 
-                if (game.isRightStep(currentPlace, cave)) {
+                if (player.isRightStep(currentPlace, cave, game)) {
                     validInput = true;
-                    game.locationOutput(cave);
-                    place = cave;
+                    player.locationOutput(cave, game);
+                    player.setPlace(cave);
                 } else {
                     System.out.println("Invalid input, you can walk only to neighbour caves!");
                 }
