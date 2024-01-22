@@ -8,9 +8,9 @@ public class Main {
         // Main loop
         while (runGame) {
             player.getPlace();
-            game.nextToWumpus(player.getPlace());
-            game.nextToBats(player.getPlace());
-            game.nextToPits(player.getPlace());
+            player.nextToWumpus(player.getPlace(),game);
+            player.nextToBats(player.getPlace(),game);
+            player.nextToPits(player.getPlace(),game);
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
@@ -31,7 +31,7 @@ public class Main {
                     // endGame = game.batTrap(player.getPlace());
                     break;
                 case 'S':
-                if (!game.shootArrow(game, player.getPlace())) {
+                if (!player.shootArrow(game, player.getPlace())) {
                     runGame = false; // Player has run out of arrows
                     
                 }
