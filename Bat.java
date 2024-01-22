@@ -19,7 +19,7 @@ public class Bat {
                 return false;
             }
             System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", currentPlace);
-            player.locationOutput(currentPlace, game);
+            player.locationOutput(game);
             return true;
         } else {
             return true;

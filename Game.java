@@ -154,13 +154,13 @@ public class Game {
 
         while (!validInput) {
             try {
-                player.locationOutput(currentPlace, game);
+                player.locationOutput(game);
                 int cave = scanner.nextInt();
 
-                if (player.isRightStep(currentPlace, cave, game)) {
+                if (player.isRightStep(cave, game)) {
                     validInput = true;
-                    player.locationOutput(cave, game);
                     player.setPlace(cave);
+                    player.locationOutput(game);
                 } else {
                     System.out.println("Invalid input, you can walk only to neighbour caves!");
                 }

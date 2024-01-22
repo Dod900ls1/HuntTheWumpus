@@ -7,13 +7,14 @@ public class Main {
         Wumpus wumpus = new Wumpus();
         Bat bat = new Bat();
         Game game = new Game(wumpus);
+        player.locationOutput(game);
 
         // Main loop
         while (runGame) {
             player.getPlace();
-            player.nextToWumpus(player.getPlace(),game,wumpus);
-            player.nextToBats(player.getPlace(),game);
-            player.nextToPits(player.getPlace(),game);
+            player.nextToWumpus(game,wumpus);
+            player.nextToBats(game);
+            player.nextToPits(game);
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
@@ -34,7 +35,7 @@ public class Main {
                     // endGame = game.batTrap(player.getPlace());
                     break;
                 case 'S':
-                if (!player.shootArrow(game, player.getPlace(), wumpus)) {
+                if (!player.shootArrow(game, wumpus)) {
                     runGame = false; // Player has run out of arrows
                     
                 }
