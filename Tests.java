@@ -1,5 +1,5 @@
 public class Tests {
-    private static Game game = new Game();
+    //private static Game game = new Game();
 
     // private static void pitTest() {
     //     // pit generator test (just generate 1000 of those and check if they are right)
