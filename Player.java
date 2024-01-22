@@ -58,5 +58,21 @@ public class Player {
         return false;
     }
 
+        /**
+     * Methods to inform the player about the proximity of the Wumpus
+     * 
+     * @param currentPlace
+     */
+    public void nextToWumpus(int currentPlace, Game game) {
+        if (game.generateCaveConnections().get(currentPlace)[0] == Wumpus
+                || game.generateCaveConnections().get(currentPlace)[1] == Wumpus
+                || game.generateCaveConnections().get(currentPlace)[2] == Wumpus) {
+            System.out.println("You smell the Wumpus in one of neighbour caves!");
+            return;
+        } else {
+            return;
+        }
+    }
+
 
 }
