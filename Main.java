@@ -9,10 +9,6 @@ public class Main {
         Game game = new Game(wumpus);
         player.locationOutput(game);
 
-        for (int i : game.getBatsArr()) {
-            System.out.println(i);
-        }
-
         // Main loop
         while (runGame) {
             player.getPlace();
