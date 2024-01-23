@@ -145,7 +145,7 @@ public class Player {
      * @param shot
      * @return boolean
      */
-    private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
+    private boolean killWumpus(int shot, Game game, Wumpus wumpus) {
         if (shot == wumpus.getWumpus()) {
             System.out.println("You've killed the Wumpus, you won!");
             return false;
@@ -161,7 +161,7 @@ public class Player {
      * @param shot
      * @return boolean
      */
-    private boolean arrowCounter(int shot) {
+    private boolean arrowCounter() {
         if (arrows > 1) {
             arrows--;
             System.out.printf("You have %d arrows left.%n", arrows);
@@ -181,6 +181,7 @@ public class Player {
      * @param currentPlace
      * @return boolean
      */
+    
     public boolean shootArrow(Game game, int currentPlace, Wumpus wumpus) {
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 game.generateCaveConnections().get(currentPlace)[0], game.generateCaveConnections().get(currentPlace)[1],
@@ -198,7 +199,7 @@ public class Player {
                     killBat(shot,game);
                     if (!killWumpus(shot,game,wumpus))
                         return false;
-                    if (!arrowCounter(shot))
+                    if (!arrowCounter())
                         return false;
                     if (!wumpus.scareWumpus(shot, currentPlace,game))
                         return false;

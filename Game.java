@@ -25,6 +25,7 @@ public class Game {
 
     private Set<Integer> usedLocations = new HashSet<>();
 
+    
     /**
      * Constructor to initialize the game state
      */
@@ -46,9 +47,6 @@ public class Game {
         return pits[index];
     }
 
-    public void setPits(int[] pits) {
-        this.pits = pits;
-    }
 
     public int[] getPitsArr(){
        return pits; 
