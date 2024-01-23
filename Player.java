@@ -65,6 +65,7 @@ public class Player {
      * @param wumpus The Wumpus object needed to access Wumpus class methods
      */
     public void nextToWumpus(Game game, Wumpus wumpus) {
+        //Checks whether the any joined nodes of cave location contains Wumpus
         if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
                 || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
                 || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc()) {
@@ -78,6 +79,7 @@ public class Player {
      * @param game The Game object needed to access Game class methods
      */
     public void nextToBats(Game game) {
+        //Checks whether the any joined nodes of cave location contains Bats
         for (int i : game.getBatsArr()) {
             if (game.generateCaveConnections().get(playerLocation)[0] == i
                     || game.generateCaveConnections().get(playerLocation)[1] == i
@@ -94,6 +96,7 @@ public class Player {
      * @param game The Game object needed to access Game class methods
      */
     public void nextToPits(Game game) {
+        ////Checks whether the any joined nodes of cave location contains Pits
         for (int i : game.getPitsArr()) {
             if (game.generateCaveConnections().get(playerLocation)[0] == i
                     || game.generateCaveConnections().get(playerLocation)[1] == i
@@ -127,6 +130,7 @@ public class Player {
      * @param game The Game object needed to access Game class methods
      */
     private void killBat(int shot,Game game) {
+        //Checks whether the location of the shot contains a bat
         for (int i : game.getBatsArr()) {
             if (shot == i) {
                 System.out.println("You killed the bat!");
@@ -145,6 +149,7 @@ public class Player {
      * @return boolean of whether the game continues
      */
     private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
+        //Checks whether the location of the shot contains a wumpus
         if (shot == wumpus.getWumpusLoc()) {
             System.out.println("You've killed the Wumpus, you won!");
             return false;
@@ -161,10 +166,12 @@ public class Player {
      */
     private boolean arrowCounter() {
         if (arrows > 1) {
+            //Decreases the number of arrows available
             arrows--;
             System.out.printf("You have %d arrows left.%n", arrows);
             return true;
         } else {
+            //States no arrows left and ends game
             arrows--;
             System.out.println("You've used all of your arrows. Now you're useless. You lost!");
             return false;
@@ -180,6 +187,7 @@ public class Player {
      * @return boolean of whether game continues
      */
     public boolean shootArrow(Game game,Wumpus wumpus) {
+        //States the location of where arrows can be shot
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
                 game.generateCaveConnections().get(playerLocation)[2]);
@@ -190,9 +198,11 @@ public class Player {
             try {
                 int shot = scanner.nextInt();
 
+                //Checls whether arrow is permittable
                 if (isRightStep(shot, game)) {
                     validInput = true;
 
+                    //Checks individual components that can affect game in order of importance
                     killBat(shot,game);
                     if (!killWumpus(shot,game,wumpus))
                         return false;
@@ -205,6 +215,7 @@ public class Player {
                     return true; // Player has arrows left
                 }
             } catch (InputMismatchException e) {
+                //Used if invalid input is written
                 System.out.println("Invalid input. Please enter an integer.");
                 scanner.nextLine();
             }
