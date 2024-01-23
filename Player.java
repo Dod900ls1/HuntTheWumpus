@@ -148,6 +148,7 @@ public class Player {
      * @param wumpus The Wumpus object required to access Wumpus class methods
      * @return boolean of whether the game continues
      */
+
     private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
         //Checks whether the location of the shot contains a wumpus
         if (shot == wumpus.getWumpusLoc()) {
@@ -186,8 +187,9 @@ public class Player {
      * @param wumpus The Wumpus object needed to access Wumpus class methods
      * @return boolean of whether game continues
      */
+
     public boolean shootArrow(Game game,Wumpus wumpus) {
-        //States the location of where arrows can be shot
+
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
                 game.generateCaveConnections().get(playerLocation)[2]);

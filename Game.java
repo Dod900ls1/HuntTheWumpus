@@ -20,6 +20,7 @@ public class Game {
     //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
 
+    
     /**
      * Constructor to initialize the game state
      * 
@@ -44,12 +45,16 @@ public class Game {
     public int getPits(int index){
         return pits[index];
     }
+
     
     /**
      * Returns Array of location of Pits.
      * 
      * @return The array of pit locations
      */
+
+
+
     public int[] getPitsArr(){
        return pits; 
     }
