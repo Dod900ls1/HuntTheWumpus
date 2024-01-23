@@ -7,45 +7,52 @@ import java.util.Set;
 public class Game {
 
     // HashMap to store cave connections
-
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
 
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 
-    // // Initial number of arrows
-    // private int arrows = 5;
 
     // Arrays to store pit locations, bat locations, and the Wumpus location
     private int[] pits;
     private int[] bats;
 
-    // // Randomly generated starting cave
-    // private int place = (int) (Math.random() * ((20) + 1));
-
+    //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
 
     
     /**
      * Constructor to initialize the game state
+     * 
+     * @param wumpus The object needed to access wumpus methods
      */
     public Game(Wumpus wumpus) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
         pits = generateUniqueLocations(2);
-        wumpus.setWumpus(generateUniqueLocation());
+        wumpus.setWumpusLoc(generateUniqueLocation());
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
     }
 
     /**
-     * Returns Array of location of Pits.
+     * Returns individual location of pit.
      * 
-     * @return pits The array of pit locations
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * 
+     * @return The individual pit location
      */
     public int getPits(int index){
         return pits[index];
     }
+
+    
+    /**
+     * Returns Array of location of Pits.
+     * 
+     * @return The array of pit locations
+     */
+
 
 
     public int[] getPitsArr(){
@@ -53,18 +60,31 @@ public class Game {
     }
 
     /**
-     * Returns Array of location of the bats.
+     * Returns individual location of bat.
      * 
-     * @return bats The array of bat locations
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * 
+     * @return The individual bat location
      */
     public int getBats(int index){
         return bats[index];
     }
 
+    /**
+     * Returns Array of location of the bats.
+     * 
+     * @return The array of bat locations
+     */
     public int[] getBatsArr(){
         return bats;
     }
 
+    /**
+     * Sets the location of an individual bat.
+     * 
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param newVal Used as the new location value for bats
+     */
     public void setBats(int index,int newVal){
         bats[index] = newVal;
     }
@@ -85,7 +105,7 @@ public class Game {
     /**
      * Generates a set of unique locations that has not been used in the game.
      * 
-     * @param count
+     * @param count to indicate the number of unique locations
      * @return An array of unique locations
      */
     private int[] generateUniqueLocations(int count) {
@@ -98,7 +118,8 @@ public class Game {
 
     /**
      * Method to generate random number between 1 and 20 (inclusive)
-     * @return int
+     * 
+     * @return the randomised number
      */
     public int generateRandomNumber() {
         return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive
@@ -107,7 +128,7 @@ public class Game {
     /**
      * Method to define cave connections and return the HashMap
      * Caves form a dodecahedron.
-     * @return HashMap<Integer, Integer[]>
+     * @return HashMap<Integer, Integer[]> which is the nodes that can be accessed
      */
     public HashMap<Integer, Integer[]> generateCaveConnections() {
         caves.put(1, new Integer[] { 2, 8, 5 });
@@ -138,7 +159,7 @@ public class Game {
     /**
      * Method to get user input for the next move
      * 
-     * @return
+     * @return the user input
      */
     public char getUserInput() {
         System.out.println("Shoot = S, Walk to another cave = W");
@@ -148,20 +169,21 @@ public class Game {
     /**
      * Method to move to a new cave based on user input
      * 
-     * @param game
-     * @param currentPlace
+     * @param game the object needed to access Game class methods
+     * @param player the object needed to access Player class methods
      */
-    public void moveCave(Game game, int currentPlace, Player player) {
+    public void moveCave(Game game, Player player) {
         boolean validInput = false;
 
         while (!validInput) {
             try {
-                player.locationOutput(currentPlace, game);
+                player.locationOutput(game);
                 int cave = scanner.nextInt();
 
-                if (player.isRightStep(currentPlace, cave, game)) {
+                //Checks whether the move chosen is valid
+                if (player.isRightStep(cave, game)) {
+                    //If valid move, updates player's current location
                     validInput = true;
-                    player.locationOutput(cave, game);
                     player.setPlace(cave);
                 } else {
                     System.out.println("Invalid input, you can walk only to neighbour caves!");
@@ -178,10 +200,12 @@ public class Game {
      * Check if player got to a pit trap. Terminate the program if he did.
      * 
      * @param currentPlace
-     * @return
+     * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
+        //Checks whether the current location is same as those of pits
         if (currentPlace == pits[0] || currentPlace == pits[1]) {
+            //If so, output end statement and End Game
             System.out.println("HAHAHA! YOU FALL IN A PIT AND DIE!");
             return false;
         } else {
