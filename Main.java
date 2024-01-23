@@ -36,7 +36,7 @@ public class Main {
                     break;
                 case 'S':
                 if (!player.shootArrow(game, wumpus)) {
-                    runGame = false; // Player has run out of arrows
+                    runGame = false; // Game has finished (run our of arrows, or wumpus killed)
                     
                 }
                 break;
