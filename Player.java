@@ -70,13 +70,9 @@ public class Player {
                 || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc()) {
             System.out.println("You smell the Wumpus in one of neighbour caves!");
         }
-        // return;
-        // } else {
-        //     return;
-        // }
     }
 
-        /**
+    /**
      * Methods to inform the player about the proximity of the bats
      * 
      * @param game The Game object needed to access Game class methods
@@ -109,7 +105,7 @@ public class Player {
     }
 
     /**
-     * Helper method to get an index of an element in array.
+     * Method to get an index of an element in array.
      * 
      * @param arr The array used to get the element of
      * @param element The element within the array to get the index
@@ -158,7 +154,7 @@ public class Player {
     }
 
     /**
-     * Counts how much rows player has left. If they used all of them, terminate
+     * Counts how much arrows player has left. If all of them used, terminate
      * program as the player can't kill the Wumpus anymore.
      * 
      * @return boolean of whether the game continues, considering the amount of arrows left
@@ -176,7 +172,7 @@ public class Player {
     }
 
     /**
-     * This method is responsible for the whole attack system in our game. Calls
+     * This method is responsible for the whole attack system in the game. Calls
      * killWumpus(), arrowCounter(), and scareWumpus() when it is appropriate.
      * 
      * @param game The Game object needed to access Game class methods

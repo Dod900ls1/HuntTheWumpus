@@ -14,10 +14,10 @@ public class Bat {
         if (currentPlace == game.getBats(0) || currentPlace == game.getBats(1)) {
             currentPlace = game.generateRandomNumber();
             if (currentPlace == wumpus.getWumpusLoc()) {
-                System.out.println("Bats brought you just in the mouth of Wumpus, loser!");
+                System.out.println("The Bat brought you just in the mouth of Wumpus, loser!");
                 return false;
             } else if (currentPlace == game.getPits(0) || currentPlace == game.getPits(1)) {
-                System.out.println("Bats threw you in a pit and you died miserably. Great job!");
+                System.out.println("The Bat threw you in a pit and you died miserably. Great job!");
                 return false;
             }
             System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", currentPlace);

@@ -7,22 +7,17 @@ import java.util.Set;
 public class Game {
 
     // HashMap to store cave connections
-
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
 
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 
-    // // Initial number of arrows
-    // private int arrows = 5;
 
     // Arrays to store pit locations, bat locations, and the Wumpus location
     private int[] pits;
     private int[] bats;
 
-    // // Randomly generated starting cave
-    // private int place = (int) (Math.random() * ((20) + 1));
-
+    //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
 
     /**
@@ -118,6 +113,7 @@ public class Game {
 
     /**
      * Method to generate random number between 1 and 20 (inclusive)
+     * 
      * @return the randomised number
      */
     public int generateRandomNumber() {

@@ -22,14 +22,14 @@ public class Wumpus {
 
     
     /**
-     * Checks if player entered Wumpus cave. Terminate the program if he is.
+     * Checks if player entered Wumpus cave. Terminate the program if true.
      * 
      * @param currentPlace The current location of the user
      * @return Boolean of whether the game continues
      */
     public boolean WumpusTrap(int currentPlace) {
         if (currentPlace == wumpusLocation) {
-            System.out.println("You've got to the Wumpus's cave, and he eat you!");
+            System.out.println("You've stumbled upon the wumpus's cave, and it ate you!!");
             return false;
         }
         return true;
@@ -38,7 +38,7 @@ public class Wumpus {
 
     /**
      * If player shoot an arrow next to a Wumpus cave, but didn't kill it - Wumpus
-     * disclocates to another cave.
+     * reclocates to another cave.
      * 
      * @param shot The location of where the arrow was shot
      * @param currentPlace The current location of the user
@@ -50,11 +50,11 @@ public class Wumpus {
                 || game.generateCaveConnections().get(currentPlace)[1] == wumpusLocation
                 || game.generateCaveConnections().get(currentPlace)[2] == wumpusLocation) {
             wumpusLocation = game.generateRandomNumber();
-            if (wumpusLocation == currentPlace) {  //Used to be this.place
+            if (wumpusLocation == currentPlace) {
                 System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
                 return false;
             } else {
-                System.out.println("You missed. Wumpus heared you. He dislocated to other cave.");
+                System.out.println("You missed. Wumpus heared you. He relocated to other cave.");
             }
         }
         return true;

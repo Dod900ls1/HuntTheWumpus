@@ -29,10 +29,6 @@ public class Main {
                         runGame = false;
                         break;
                     } 
-
-                    // System.out.printf("Bats are in %d, %d, %d.%nWumpus is in %d.%nPits are in %d, %d.%n",game.getBats()[0],
-                    //  game.getBats()[1], game.getBats()[2], game.getWumpus(), game.getPits()[0], game.getPits()[1]);
-                    // endGame = game.batTrap(player.getPlace());
                     break;
                 case 'S':
                 if (!player.shootArrow(game, wumpus)) {
