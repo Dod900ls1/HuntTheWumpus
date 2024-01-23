@@ -46,9 +46,11 @@ public class Wumpus {
      * @return boolean of whether the game continues
      */
     public boolean scareWumpus(int shot, int currentPlace, Game game) {
+        //Checks whether Wumpus is in any linked nodes to the player
         if (game.generateCaveConnections().get(currentPlace)[0] == wumpusLocation
                 || game.generateCaveConnections().get(currentPlace)[1] == wumpusLocation
                 || game.generateCaveConnections().get(currentPlace)[2] == wumpusLocation) {
+            //If so, update the location of the wumpus and progress depending on where the new location is
             wumpusLocation = game.generateRandomNumber();
             if (wumpusLocation == currentPlace) {
                 System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
