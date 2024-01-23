@@ -25,7 +25,7 @@ public class Tests {
     public void testKillWumpus() 
     throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException{
         
-        Field wumpusField = Wumpus.class.getDeclaredField("wumpus");
+        Field wumpusField = Wumpus.class.getDeclaredField("wumpusLocation");
         wumpusField.setAccessible(true);
         int wumpusPlace = 1;
         wumpusField.set(wumpus, wumpusPlace);
@@ -41,7 +41,7 @@ public class Tests {
     public void testDontKillWumpus() 
     throws InvocationTargetException, NoSuchMethodException, NoSuchFieldException, IllegalAccessException{
         
-        Field wumpusField = Wumpus.class.getDeclaredField("wumpus");
+        Field wumpusField = Wumpus.class.getDeclaredField("wumpusLocation");
         wumpusField.setAccessible(true);
         int wumpusPlace = 1;
         wumpusField.set(wumpus, wumpusPlace);
@@ -112,7 +112,7 @@ public class Tests {
      */
     @Test
     public void testScareWumpus() throws NoSuchFieldException, IllegalAccessException {
-        Field wumpusField = Wumpus.class.getDeclaredField("wumpus");
+        Field wumpusField = Wumpus.class.getDeclaredField("wumpusLocation");
         wumpusField.setAccessible(true);
         int wumpusPlace = 1;
         wumpusField.set(wumpus, wumpusPlace);
@@ -129,25 +129,35 @@ public class Tests {
 
     /**
      * Checks if we actually move through caves
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
      */
     @Test
-    public void testWalking_ValidUserInput() {
-        int caveIndex = 1;
+    public void testWalking_ValidUserInput() throws NoSuchFieldException, IllegalAccessException{
+        Field playerLocation = Player.class.getDeclaredField("playerLocation");
+        playerLocation.setAccessible(true);
+        int location = 1;
+        playerLocation.set(player, location);
         int userInput = 2;
 
-        boolean result = player.isRightStep(caveIndex, userInput, game);
+        boolean result = player.isRightStep(userInput, game);
         Assert.assertTrue(result);
     }
 
     /**
-     * Checks the case if player try to move to unaccesible cave
+     * Checks the case if player try to move to unaccesible cavewumpusLocation
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
      */
     @Test
-    public void testWalking_InvalidUserInput() {
-        int caveIndex = 1;
+    public void testWalking_InvalidUserInput() throws NoSuchFieldException, IllegalAccessException{
+        Field playerLocation = Player.class.getDeclaredField("playerLocation");
+        playerLocation.setAccessible(true);
+        int location = 1;
+        playerLocation.set(player, location);
         int userInput = 15;
 
-        boolean result = player.isRightStep(caveIndex, userInput, game);
+        boolean result = player.isRightStep(userInput, game);
         Assert.assertFalse(result);
     }
 
@@ -188,7 +198,7 @@ public class Tests {
      */
     @Test
     public void testWumpusTrap_PlayerEntersWumpus() throws NoSuchFieldException, IllegalAccessException {
-        Field wumpusField = Wumpus.class.getDeclaredField("wumpus");
+        Field wumpusField = Wumpus.class.getDeclaredField("wumpusLocation");
         wumpusField.setAccessible(true);
         wumpusField.set(wumpus, 3);
 
