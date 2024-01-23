@@ -175,7 +175,9 @@ public class Game {
                 player.locationOutput(game);
                 int cave = scanner.nextInt();
 
+                //Checks whether the move chosen is valid
                 if (player.isRightStep(cave, game)) {
+                    //If valid move, updates player's current location
                     validInput = true;
                     player.setPlace(cave);
                     player.locationOutput(game);
@@ -197,7 +199,9 @@ public class Game {
      * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
+        //Checks whether the current location is same as those of pits
         if (currentPlace == pits[0] || currentPlace == pits[1]) {
+            //If so, output end statement and End Game
             System.out.println("HAHAHA! YOU FALL IN A PIT AND DIE!");
             return false;
         } else {

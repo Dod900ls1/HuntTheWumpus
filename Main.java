@@ -31,11 +31,10 @@ public class Main {
                     } 
                     break;
                 case 'S':
-                if (!player.shootArrow(game, wumpus)) {
-                    runGame = false; // Game has finished (run our of arrows, or wumpus killed)
-                    
-                }
-                break;
+                    if (!player.shootArrow(game, wumpus)) {
+                        runGame = false; // Game has finished (run our of arrows, or wumpus killed)
+                    }
+                    break;
                 default:
                     System.out.println("There's no such option.");
                     break;
