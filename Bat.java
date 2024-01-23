@@ -24,7 +24,7 @@ public class Bat {
                 return false;
             }
             //If no action, print out new location, and carry on with game
-            System.out.printf("You've got to the cave with bats. They brought you to the cave number %d%n", currentPlace);
+            System.out.printf("You've got to the cave with bats. They brought you to the cave number %d.%n", currentPlace);
             player.setPlace(currentPlace);
             return true;
         } else {

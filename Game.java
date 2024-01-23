@@ -180,7 +180,6 @@ public class Game {
                     //If valid move, updates player's current location
                     validInput = true;
                     player.setPlace(cave);
-                    player.locationOutput(game);
                 } else {
                     System.out.println("Invalid input, you can walk only to neighbour caves!");
                 }

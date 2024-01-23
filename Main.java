@@ -9,6 +9,10 @@ public class Main {
         Game game = new Game(wumpus);
         player.locationOutput(game);
 
+        for (int i : game.getBatsArr()) {
+            System.out.println(i);
+        }
+
         // Main loop
         while (runGame) {
             player.getPlace();
@@ -29,6 +33,7 @@ public class Main {
                         runGame = false;
                         break;
                     } 
+                    player.locationOutput(game);
                     break;
                 case 'S':
                     if (!player.shootArrow(game, wumpus)) {
