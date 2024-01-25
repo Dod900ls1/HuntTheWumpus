@@ -63,48 +63,55 @@ public class Player {
      * 
      * @param game The Game object needed to access Game class methods
      * @param wumpus The Wumpus object needed to access Wumpus class methods
+     * 
+     * @return whether user is next to wumpus
      */
-    public void nextToWumpus(Game game, Wumpus wumpus) {
+    public boolean nextToWumpus(Game game, Wumpus wumpus) {
         //Checks whether the any joined nodes of cave location contains Wumpus
         if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
                 || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
                 || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc()) {
-            System.out.println("You smell the Wumpus in one of neighbour caves!");
+                    return true;
         }
+        return false;
     }
 
     /**
      * Methods to inform the player about the proximity of the bats
      * 
      * @param game The Game object needed to access Game class methods
+     * 
+     * @return whether user is next to bats
      */
-    public void nextToBats(Game game) {
+    public boolean nextToBats(Game game) {
         //Checks whether the any joined nodes of cave location contains Bats
         for (int i : game.getBatsArr()) {
             if (game.generateCaveConnections().get(playerLocation)[0] == i
                     || game.generateCaveConnections().get(playerLocation)[1] == i
                     || game.generateCaveConnections().get(playerLocation)[2] == i) {
-                System.out.println("You can hear Bats near you!");
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**
      * Methods to inform the player about the proximity of the pits
      * 
      * @param game The Game object needed to access Game class methods
+     * 
+     * @return whether user is next to pits
      */
-    public void nextToPits(Game game) {
+    public boolean nextToPits(Game game) {
         ////Checks whether the any joined nodes of cave location contains Pits
         for (int i : game.getPitsArr()) {
             if (game.generateCaveConnections().get(playerLocation)[0] == i
                     || game.generateCaveConnections().get(playerLocation)[1] == i
                     || game.generateCaveConnections().get(playerLocation)[2] == i) {
-                System.out.println("You can feel the blowing of wind. Pit is near you!");
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     /**

@@ -60,6 +60,8 @@ The `Player` class handles player-related actions, such as displaying the player
   - `game`: The `Game` object needed to access `Game` class methods.
   - `wumpus`: The `Wumpus` object needed to access `Wumpus` class methods.
 
+- **Return:** Whether the player is next to wumpus.
+
 #### `nextToBats`
 
 - **Description:** Informs the player about the proximity of bats.
@@ -67,12 +69,16 @@ The `Player` class handles player-related actions, such as displaying the player
 - **Parameters:**
   - `game`: The `Game` object needed to access `Game` class methods.
 
+- **Return:** Whether the player is next to bats.
+
 #### `nextToPits`
 
 - **Description:** Informs the player about the proximity of pits.
 
 - **Parameters:**
   - `game`: The `Game` object needed to access `Game` class methods.
+
+- **Return:** Whether the player is next to a pit.
 
 #### `shootArrow`
 
