@@ -1,20 +1,28 @@
+import java.util.Scanner;
+
 public class Main {
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
         boolean runGame = true;
         Player player = new Player();
+        GameStarter gameStarter = new GameStarter();
         Wumpus wumpus = new Wumpus();
         Bat bat = new Bat();
         Game game = new Game(wumpus);
-        player.locationOutput(game);
-
+        
+        
+        System.out.println("Do you want to see instructions? (Y/N)");
+        String initInstructions = scanner.nextLine();
+        gameStarter.starterInstructions(initInstructions);
+        
         // Main loop
         while (runGame) {
-            player.getPlace();
+            player.locationOutput(game);
             player.nextToWumpus(game,wumpus);
             player.nextToBats(game);
             player.nextToPits(game);
+            player.getPlace();
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
                 case 'W':
@@ -29,7 +37,7 @@ public class Main {
                         runGame = false;
                         break;
                     } 
-                    player.locationOutput(game);
+                    
                     break;
                 case 'S':
                     if (!player.shootArrow(game, wumpus)) {
@@ -40,6 +48,8 @@ public class Main {
                     System.out.println("There's no such option.");
                     break;
             }
+
+            System.out.println("\n-------------------------------------------------------------------------\n");
         }
     }
 }

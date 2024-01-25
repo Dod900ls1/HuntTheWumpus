@@ -50,8 +50,13 @@ public class Wumpus {
         if (game.generateCaveConnections().get(currentPlace)[0] == wumpusLocation
                 || game.generateCaveConnections().get(currentPlace)[1] == wumpusLocation
                 || game.generateCaveConnections().get(currentPlace)[2] == wumpusLocation) {
-            //If so, update the location of the wumpus and progress depending on where the new location is
-            wumpusLocation = game.generateRandomNumber();
+
+            int newWumpusLocation;
+            do {
+                // Generate a new random location until it's different from the wumpus`s location
+                newWumpusLocation = game.generateRandomNumber();
+            } while (newWumpusLocation == currentPlace);
+            wumpusLocation = newWumpusLocation;
             if (wumpusLocation == currentPlace) {
                 System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
                 return false;
