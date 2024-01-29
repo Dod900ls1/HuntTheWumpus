@@ -1,6 +1,7 @@
 public class Wumpus {
 
     private int wumpusLocation;
+    private boolean dead = false;
 
     /**
      * Returns Array of location of the Wumpus.
@@ -18,6 +19,22 @@ public class Wumpus {
      */
     public void setWumpusLoc(int wumpusLocation){
         this.wumpusLocation = wumpusLocation;
+    }
+
+    /**
+     * Returns whether Wumpus is dead.
+     * 
+     * @return The boolean of whether wumpus is dead
+     */
+    public boolean getWumpusDead(){
+        return dead;
+    }
+    
+    /**
+     * Sets that the wumpus has been killed.
+     */
+    public void setWumpusDead(){
+        dead = true;
     }
 
     
@@ -55,13 +72,13 @@ public class Wumpus {
             do {
                 // Generate a new random location until it's different from the wumpus`s location
                 newWumpusLocation = game.generateRandomNumber();
-            } while (newWumpusLocation == currentPlace);
+            } while (newWumpusLocation == wumpusLocation);
             wumpusLocation = newWumpusLocation;
             if (wumpusLocation == currentPlace) {
-                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
+                System.out.println("You missed. Wumpus heared you. It came to your cave and killed you.");
                 return false;
             } else {
-                System.out.println("You missed. Wumpus heared you. He relocated to other cave.");
+                System.out.println("You missed. Wumpus heared you. It relocated to other cave.");
             }
         }
         return true;

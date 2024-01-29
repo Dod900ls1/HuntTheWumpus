@@ -13,9 +13,11 @@ public class Game {
     private static Scanner scanner = new Scanner(System.in);
 
 
-    // Arrays to store pit locations, bat locations, and the Wumpus location
+    // Arrays to store pit locations, bat locations, Wumpus locations and Arrow locations
     private int[] pits;
     private int[] bats;
+    private Wumpus[] arrWumpus = new Wumpus[2];
+    private int[] arrowLocs;
 
     //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
@@ -24,15 +26,22 @@ public class Game {
     /**
      * Constructor to initialize the game state
      * 
-     * @param wumpus The object needed to access wumpus methods
+     * @param wumpus0 The first object needed to access wumpus methods
+     * @param wumpus1 The second object needed to access wumpus methods
      */
-    public Game(Wumpus wumpus) {
-        // Randomly generate cave locations for pits, bats, and the Wumpus
+    public Game(Wumpus wumpus0, Wumpus wumpus1) {
+        // Randomly generate cave locations for pits, bats, and the Wumpuses
         pits = generateUniqueLocations(2);
-        wumpus.setWumpusLoc(generateUniqueLocation());
+
+        wumpus0.setWumpusLoc(generateUniqueLocation());
+        wumpus1.setWumpusLoc(generateUniqueLocation());
+        arrWumpus[0] = wumpus0;
+        arrWumpus[1] = wumpus1;
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
+
+        arrowLocs = generateUniqueLocations(batCount - 1);
     }
 
     /**
@@ -52,9 +61,6 @@ public class Game {
      * 
      * @return The array of pit locations
      */
-
-
-
     public int[] getPitsArr(){
        return pits; 
     }
@@ -87,6 +93,49 @@ public class Game {
      */
     public void setBats(int index,int newVal){
         bats[index] = newVal;
+    }
+
+    /**
+     * Returns Array of wumpus within the game.
+     * 
+     * @return The array of wumpus
+     */
+    public Wumpus[] getWumpusArr(){
+        return arrWumpus;
+    }
+
+    /**
+     * Checks whether both Wumpuses have been killed.
+     * 
+     * @return boolean of whether the game continues
+     */
+    public boolean checkWumpusStatus(){
+        for (Wumpus wumpus : getWumpusArr()) {
+            if(!wumpus.getWumpusDead()){
+                return true; //Set as true if either wumpus is alive
+            }
+        }
+        System.out.println("You've killed both Wumpuses. Very well done!");
+        return false;
+    }
+
+    /**
+     * Returns Array of location of the Arrows.
+     * 
+     * @return The array of arrows locations
+     */
+    public int[] getArrowLocsArr(){
+        return arrowLocs;
+    }
+
+    /**
+     * Sets the location of an individual arrows.
+     * 
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param newVal Used as the new location value for arrows
+     */
+    public void setArrowsLocs(int index,int newVal){
+        arrowLocs[index] = newVal;
     }
 
     /**
@@ -169,19 +218,18 @@ public class Game {
     /**
      * Method to move to a new cave based on user input
      * 
-     * @param game the object needed to access Game class methods
      * @param player the object needed to access Player class methods
      */
-    public void moveCave(Game game, Player player) {
+    public void moveCave(Player player) {
         boolean validInput = false;
 
         while (!validInput) {
             try {
-                player.locationOutput(game);
+                player.locationOutput();
                 int cave = scanner.nextInt();
 
                 //Checks whether the move chosen is valid
-                if (player.isRightStep(cave, game)) {
+                if (player.isRightStep(cave)) {
                     //If valid move, updates player's current location
                     validInput = true;
                     player.setPlace(cave);
@@ -199,7 +247,7 @@ public class Game {
     /**
      * Check if player got to a pit trap. Terminate the program if he did.
      * 
-     * @param currentPlace
+     * @param currentPlace current location of player
      * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
@@ -210,6 +258,32 @@ public class Game {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * Check if the player is next to any Dangers. If so, output this:
+     * 
+     * @param player the Player object required to access Player methods
+     * @param game the Game object required to access Game methods
+     */
+    public void checkWarnings(Player player){
+        boolean isNextToWumpus = player.nextToWumpus();
+        boolean isNextToBat = player.nextToBats();
+        boolean isNextToPit = player.nextToPits();
+
+        if(isNextToBat|| isNextToWumpus || isNextToPit){
+            System.out.println("\n    WARNING:");
+            if(isNextToWumpus){
+                System.out.println("\tYou smell the Wumpus in one of neighbour caves!");
+            }
+            if(isNextToBat){
+                System.out.println("\t You can hear Bats near you!");
+            }
+            if(isNextToPit){
+                System.out.println("\t You can feel the blowing of wind. Pit is near you!");
+            }
+            System.out.println();
         }
     }
 }
