@@ -44,8 +44,6 @@ public class Player {
 
     /**
      * Method to display current location and available caves
-     * 
-     * @param game The Game object to access Game class methods
      */
     public void locationOutput() {
         System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", playerLocation,
@@ -57,7 +55,7 @@ public class Player {
      * Method to check if the step made by player is valid.
      * 
      * @param input The value chosen by the player to move to
-     * @param game The game object needed to access Game class methods
+     * 
      * @return Whether the move made is valid or not
      */
     public boolean isRightStep(int input) {
@@ -72,8 +70,6 @@ public class Player {
 
         /**
      * Methods to inform the player about the proximity of the Wumpus
-     * 
-     * @param game The Game object needed to access Game class methods
      * 
      * @return whether user is next to wumpus
      */
@@ -93,8 +89,6 @@ public class Player {
     /**
      * Methods to inform the player about the proximity of the bats
      * 
-     * @param game The Game object needed to access Game class methods
-     * 
      * @return whether user is next to bats
      */
     public boolean nextToBats() {
@@ -111,8 +105,6 @@ public class Player {
 
     /**
      * Methods to inform the player about the proximity of the pits
-     * 
-     * @param game The Game object needed to access Game class methods
      * 
      * @return whether user is next to pits
      */
@@ -148,7 +140,6 @@ public class Player {
      * Checks if player killed a bat.
      * 
      * @param shot The location of where the shot was placed
-     * @param game The Game object needed to access Game class methods
      */
     private void killBat(int shot) {
         //Checks whether the location of the shot contains a bat
@@ -206,7 +197,6 @@ public class Player {
      * This method is responsible for the whole attack system in the game. Calls
      * killWumpus(), arrowCounter(), and scareWumpus() when it is appropriate.
      * 
-     * @param game The Game object needed to access Game class methods
      * @return boolean of whether game continues
      */
 

@@ -25,7 +25,8 @@ public class Game {
     /**
      * Constructor to initialize the game state
      * 
-     * @param wumpus The object needed to access wumpus methods
+     * @param wumpus0 The first object needed to access wumpus methods
+     * @param wumpus0 The second object needed to access wumpus methods
      */
     public Game(Wumpus wumpus0, Wumpus wumpus1) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
@@ -56,9 +57,6 @@ public class Game {
      * 
      * @return The array of pit locations
      */
-
-
-
     public int[] getPitsArr(){
        return pits; 
     }
@@ -83,10 +81,6 @@ public class Game {
         return bats;
     }
 
-    public Wumpus[] getWumpusArr(){
-        return arrWumpus;
-    }
-
     /**
      * Sets the location of an individual bat.
      * 
@@ -95,6 +89,10 @@ public class Game {
      */
     public void setBats(int index,int newVal){
         bats[index] = newVal;
+    }
+
+    public Wumpus[] getWumpusArr(){
+        return arrWumpus;
     }
 
     public boolean checkWumpusStatus(){
@@ -187,10 +185,9 @@ public class Game {
     /**
      * Method to move to a new cave based on user input
      * 
-     * @param game the object needed to access Game class methods
      * @param player the object needed to access Player class methods
      */
-    public void moveCave(Game game, Player player) {
+    public void moveCave(Player player) {
         boolean validInput = false;
 
         while (!validInput) {
