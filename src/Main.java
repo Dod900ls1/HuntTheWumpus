@@ -20,6 +20,7 @@ public class Main {
         // Main loop
         while (runGame) {
             player.locationOutput();
+            player.onArrow();
             game.checkWarnings(player);
             player.getPlace();
             char shotOrWalk = game.getUserInput();

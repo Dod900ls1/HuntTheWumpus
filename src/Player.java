@@ -194,6 +194,24 @@ public class Player {
     }
 
     /**
+     * Checks if the new location of player contains an uncollected arrow
+     * This is used to increase the number or arrows available
+     * 
+     */
+    public void onArrow(){
+        for (int arrowLocale : game.getArrowLocsArr()) {
+
+            //Checks whether the location of the player contains a player
+            if(playerLocation == arrowLocale){
+                arrows++;
+                System.out.printf("You picked up an Arrow! You now have %d arrows.\n",arrows);
+                this.game.setArrowsLocs(indexOf(this.game.getArrowLocsArr(), playerLocation),-1); // Removes this arrow
+            }
+        }
+
+    }
+
+    /**
      * This method is responsible for the whole attack system in the game. Calls
      * killWumpus(), arrowCounter(), and scareWumpus() when it is appropriate.
      * 

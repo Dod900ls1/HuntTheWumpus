@@ -13,10 +13,11 @@ public class Game {
     private static Scanner scanner = new Scanner(System.in);
 
 
-    // Arrays to store pit locations, bat locations, and the Wumpus location
+    // Arrays to store pit locations, bat locations, Wumpus locations and Arrow locations
     private int[] pits;
     private int[] bats;
     private Wumpus[] arrWumpus = new Wumpus[2];
+    private int[] arrowLocs;
 
     //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
@@ -26,11 +27,12 @@ public class Game {
      * Constructor to initialize the game state
      * 
      * @param wumpus0 The first object needed to access wumpus methods
-     * @param wumpus0 The second object needed to access wumpus methods
+     * @param wumpus1 The second object needed to access wumpus methods
      */
     public Game(Wumpus wumpus0, Wumpus wumpus1) {
-        // Randomly generate cave locations for pits, bats, and the Wumpus
+        // Randomly generate cave locations for pits, bats, and the Wumpuses
         pits = generateUniqueLocations(2);
+
         wumpus0.setWumpusLoc(generateUniqueLocation());
         wumpus1.setWumpusLoc(generateUniqueLocation());
         arrWumpus[0] = wumpus0;
@@ -38,6 +40,8 @@ public class Game {
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
+
+        arrowLocs = generateUniqueLocations(batCount - 1);
     }
 
     /**
@@ -113,6 +117,25 @@ public class Game {
         }
         System.out.println("You've killed both Wumpuses. Very well done!");
         return false;
+    }
+
+    /**
+     * Returns Array of location of the Arrows.
+     * 
+     * @return The array of arrows locations
+     */
+    public int[] getArrowLocsArr(){
+        return arrowLocs;
+    }
+
+    /**
+     * Sets the location of an individual arrows.
+     * 
+     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param newVal Used as the new location value for arrows
+     */
+    public void setArrowsLocs(int index,int newVal){
+        arrowLocs[index] = newVal;
     }
 
     /**
