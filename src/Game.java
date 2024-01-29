@@ -217,7 +217,7 @@ public class Game {
     /**
      * Check if player got to a pit trap. Terminate the program if he did.
      * 
-     * @param currentPlace
+     * @param currentPlace current location of player
      * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
@@ -228,6 +228,32 @@ public class Game {
             return false;
         } else {
             return true;
+        }
+    }
+
+    /**
+     * Check if the player is next to any Dangers. If so, output this:
+     * 
+     * @param player the Player object required to access Player methods
+     * @param game the Game object required to access Game methods
+     */
+    public void checkWarnings(Player player, Game game){
+        boolean isNextToWumpus = player.nextToWumpus(game);
+        boolean isNextToBat = player.nextToBats(game);
+        boolean isNextToPit = player.nextToPits(game);
+
+        if(isNextToBat|| isNextToWumpus || isNextToPit){
+            System.out.println("\n    WARNING:");
+            if(isNextToWumpus){
+                System.out.println("\tYou smell the Wumpus in one of neighbour caves!");
+            }
+            if(isNextToBat){
+                System.out.println("\t You can hear Bats near you!");
+            }
+            if(isNextToPit){
+                System.out.println("\t You can feel the blowing of wind. Pit is near you!");
+            }
+            System.out.println();
         }
     }
 }

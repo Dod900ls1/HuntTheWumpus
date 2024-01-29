@@ -11,10 +11,6 @@ public class Main {
         Wumpus wumpus1 = new Wumpus();
         Bat bat = new Bat();
         Game game = new Game(wumpus0, wumpus1);
-
-        boolean isNextToWumpus = false;
-        boolean isNextToBat = false;
-        boolean isNextToPit = false;
         
         
         System.out.println("Do you want to see instructions? (Y/N)");
@@ -24,24 +20,7 @@ public class Main {
         // Main loop
         while (runGame) {
             player.locationOutput(game);
-            isNextToWumpus = player.nextToWumpus(game);
-            isNextToBat = player.nextToBats(game);
-            isNextToPit = player.nextToPits(game);
-
-            if(isNextToBat|| isNextToWumpus || isNextToPit){
-                System.out.println("\n    WARNING:");
-                if(isNextToWumpus){
-                    System.out.println("\tYou smell the Wumpus in one of neighbour caves!");
-                }
-                if(isNextToBat){
-                    System.out.println("\t You can hear Bats near you!");
-                }
-                if(isNextToPit){
-                    System.out.println("\t You can feel the blowing of wind. Pit is near you!");
-                }
-                System.out.println();
-            }
-
+            game.checkWarnings(player,game);
             player.getPlace();
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
