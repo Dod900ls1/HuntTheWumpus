@@ -7,9 +7,10 @@ public class Main {
         boolean runGame = true;
         Player player = new Player();
         GameStarter gameStarter = new GameStarter();
-        Wumpus wumpus = new Wumpus();
+        Wumpus wumpus0 = new Wumpus();
+        Wumpus wumpus1 = new Wumpus();
         Bat bat = new Bat();
-        Game game = new Game(wumpus);
+        Game game = new Game(wumpus0, wumpus1);
 
         boolean isNextToWumpus = false;
         boolean isNextToBat = false;
@@ -23,7 +24,7 @@ public class Main {
         // Main loop
         while (runGame) {
             player.locationOutput(game);
-            isNextToWumpus = player.nextToWumpus(game,wumpus);
+            isNextToWumpus = player.nextToWumpus(game);
             isNextToBat = player.nextToBats(game);
             isNextToPit = player.nextToPits(game);
 
@@ -49,19 +50,15 @@ public class Main {
                     if(!game.pitTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a pit
                         break;
-                    } else if(!wumpus.WumpusTrap(player.getPlace())){
+                    } else if(!wumpus0.WumpusTrap(player.getPlace())||!wumpus1.WumpusTrap(player.getPlace())){
                         runGame = false; // Checks if we got in a Wumpus cave
                         break;
-                    } else if(!bat.batTrap(player.getPlace(),game,wumpus,player)){
+                    } else if(!bat.batTrap(player.getPlace(),game,player)){
                         runGame = false;
-                        break;
-                    } 
-                    
+                    }
                     break;
                 case 'S':
-                    if (!player.shootArrow(game, wumpus)) {
-                        runGame = false; // Game has finished (run our of arrows, or wumpus killed)
-                    }
+                    runGame = player.shootArrow(game);
                     break;
                 default:
                     System.out.println("There's no such option.");

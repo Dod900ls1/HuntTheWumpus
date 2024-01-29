@@ -1,6 +1,7 @@
 public class Wumpus {
 
     private int wumpusLocation;
+    private boolean dead = false;
 
     /**
      * Returns Array of location of the Wumpus.
@@ -18,6 +19,22 @@ public class Wumpus {
      */
     public void setWumpusLoc(int wumpusLocation){
         this.wumpusLocation = wumpusLocation;
+    }
+
+    /**
+     * Returns whether Wumpus is dead.
+     * 
+     * @return The boolean of whether wumpus is dead
+     */
+    public boolean getWumpusDead(){
+        return dead;
+    }
+    
+    /**
+     * Sets that the wumpus has been killed.
+     */
+    public void setWumpusDead(){
+        dead = true;
     }
 
     

@@ -62,16 +62,18 @@ public class Player {
      * Methods to inform the player about the proximity of the Wumpus
      * 
      * @param game The Game object needed to access Game class methods
-     * @param wumpus The Wumpus object needed to access Wumpus class methods
      * 
      * @return whether user is next to wumpus
      */
-    public boolean nextToWumpus(Game game, Wumpus wumpus) {
-        //Checks whether the any joined nodes of cave location contains Wumpus
-        if (game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
-                || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
-                || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc()) {
-                    return true;
+    public boolean nextToWumpus(Game game) {
+
+        for (Wumpus wumpus : game.getWumpusArr()) {
+            //Checks whether the any joined nodes of cave location contains Wumpus
+            if ((game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
+            || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
+            || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc())) {
+                return true;
+            }
         }
         return false;
     }
@@ -151,15 +153,17 @@ public class Player {
      * terminate the game.
      * 
      * @param shot The location of where the shot was placed
-     * @param game The Game object required to access Game class methods
      * @param wumpus The Wumpus object required to access Wumpus class methods
      * @return boolean of whether the game continues
      */
 
-    private boolean killWumpus(int shot,Game game, Wumpus wumpus) {
+    private boolean killWumpus(int shot, Wumpus wumpus) {
         //Checks whether the location of the shot contains a wumpus
         if (shot == wumpus.getWumpusLoc()) {
-            System.out.println("You've killed the Wumpus, you won!");
+            //Sets that wumpus as dead
+            System.out.println("You've killed one of the Wumpus!");
+            wumpus.setWumpusLoc(-1);
+            wumpus.setWumpusDead();
             return false;
         } else {
             return true;
@@ -191,11 +195,10 @@ public class Player {
      * killWumpus(), arrowCounter(), and scareWumpus() when it is appropriate.
      * 
      * @param game The Game object needed to access Game class methods
-     * @param wumpus The Wumpus object needed to access Wumpus class methods
      * @return boolean of whether game continues
      */
 
-    public boolean shootArrow(Game game,Wumpus wumpus) {
+    public boolean shootArrow(Game game) {
 
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
@@ -207,17 +210,21 @@ public class Player {
             try {
                 int shot = scanner.nextInt();
 
-                //Checls whether arrow is permittable
+                //Checks whether arrow is permittable
                 if (isRightStep(shot, game)) {
                     validInput = true;
 
                     //Checks individual components that can affect game in order of importance
                     killBat(shot,game);
-                    if (!killWumpus(shot,game,wumpus))
-                        return false;
+                    for (Wumpus wumpus : game.getWumpusArr()) {
+                        if (!killWumpus(shot,wumpus)){
+                            return game.checkWumpusStatus();
+                        }
+                        if(!wumpus.scareWumpus(shot, playerLocation,game)){
+                            return false;
+                        }
+                    }
                     if (!arrowCounter())
-                        return false;
-                    if (!wumpus.scareWumpus(shot, playerLocation,game))
                         return false;
                 } else {
                     System.out.println("You can shot only in adjecent caves.");

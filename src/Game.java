@@ -16,6 +16,7 @@ public class Game {
     // Arrays to store pit locations, bat locations, and the Wumpus location
     private int[] pits;
     private int[] bats;
+    private Wumpus[] arrWumpus = new Wumpus[2];
 
     //Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
@@ -26,10 +27,13 @@ public class Game {
      * 
      * @param wumpus The object needed to access wumpus methods
      */
-    public Game(Wumpus wumpus) {
+    public Game(Wumpus wumpus0, Wumpus wumpus1) {
         // Randomly generate cave locations for pits, bats, and the Wumpus
         pits = generateUniqueLocations(2);
-        wumpus.setWumpusLoc(generateUniqueLocation());
+        wumpus0.setWumpusLoc(generateUniqueLocation());
+        wumpus1.setWumpusLoc(generateUniqueLocation());
+        arrWumpus[0] = wumpus0;
+        arrWumpus[1] = wumpus1;
 
         int batCount = generateRandomNumber() <= 10 ? 3 : 4;
         bats = generateUniqueLocations(batCount);
@@ -79,6 +83,10 @@ public class Game {
         return bats;
     }
 
+    public Wumpus[] getWumpusArr(){
+        return arrWumpus;
+    }
+
     /**
      * Sets the location of an individual bat.
      * 
@@ -87,6 +95,16 @@ public class Game {
      */
     public void setBats(int index,int newVal){
         bats[index] = newVal;
+    }
+
+    public boolean checkWumpusStatus(){
+        for (Wumpus wumpus : getWumpusArr()) {
+            if(!wumpus.getWumpusDead()){
+                return true; //Set as true if either wumpus is alive
+            }
+        }
+        System.out.println("You've killed both Wumpuses. Very well done!");
+        return false;
     }
 
     /**

@@ -6,30 +6,30 @@ public class Bat {
      * 
      * @param currentPlace The current location of the player
      * @param game The Game object required to access Game class methods
-     * @param wumpus The Wumpus object required to access Wumpus class methods
      * @param player The Player object required to access Player class methods
      * @return Boolean of whether game continues
      */
-    public boolean batTrap(int currentPlace,Game game,Wumpus wumpus,Player player) {
+    public boolean batTrap(int currentPlace,Game game,Player player) {
         //Checks if player has reached same location of bats
         if (checkBatLocation(currentPlace, game)) {
             currentPlace = game.generateRandomNumber();
-            //Checks if new location is that of Wumpus
-            if (currentPlace == wumpus.getWumpusLoc()) {
-                System.out.println("The Bat brought you just in the mouth of Wumpus, loser!");
-                return false;
-            } //Checks if new location is that of pits
-            else if (currentPlace == game.getPits(0) || currentPlace == game.getPits(1)) {
+            for (Wumpus wumpus : game.getWumpusArr()) {
+                //Checks if new location is that of Wumpus
+                if (currentPlace == wumpus.getWumpusLoc()) {
+                    System.out.println("The Bat brought you just in the mouth of Wumpus, loser!");
+                    return false;
+                } 
+            }
+            //Checks if new location is that of pits
+            if (currentPlace == game.getPits(0) || currentPlace == game.getPits(1)) {
                 System.out.println("The Bat threw you in a pit and you died miserably. Great job!");
                 return false;
             }
             //If no action, print out new location, and carry on with game
-            System.out.printf("You've got to the cave with bats. They brought you to the cave number %d.%n", currentPlace);
+            System.out.printf("You have gone to the cave with bats. They brought you to the cave number %d.%n", currentPlace);
             player.setPlace(currentPlace);
-            return true;
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**
