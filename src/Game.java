@@ -91,10 +91,20 @@ public class Game {
         bats[index] = newVal;
     }
 
+    /**
+     * Returns Array of wumpus within the game.
+     * 
+     * @return The array of wumpus
+     */
     public Wumpus[] getWumpusArr(){
         return arrWumpus;
     }
 
+    /**
+     * Checks whether both Wumpuses have been killed.
+     * 
+     * @return boolean of whether the game continues
+     */
     public boolean checkWumpusStatus(){
         for (Wumpus wumpus : getWumpusArr()) {
             if(!wumpus.getWumpusDead()){
