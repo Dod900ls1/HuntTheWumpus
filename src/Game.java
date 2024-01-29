@@ -195,11 +195,11 @@ public class Game {
 
         while (!validInput) {
             try {
-                player.locationOutput(game);
+                player.locationOutput();
                 int cave = scanner.nextInt();
 
                 //Checks whether the move chosen is valid
-                if (player.isRightStep(cave, game)) {
+                if (player.isRightStep(cave)) {
                     //If valid move, updates player's current location
                     validInput = true;
                     player.setPlace(cave);
@@ -237,10 +237,10 @@ public class Game {
      * @param player the Player object required to access Player methods
      * @param game the Game object required to access Game methods
      */
-    public void checkWarnings(Player player, Game game){
-        boolean isNextToWumpus = player.nextToWumpus(game);
-        boolean isNextToBat = player.nextToBats(game);
-        boolean isNextToPit = player.nextToPits(game);
+    public void checkWarnings(Player player){
+        boolean isNextToWumpus = player.nextToWumpus();
+        boolean isNextToBat = player.nextToBats();
+        boolean isNextToPit = player.nextToPits();
 
         if(isNextToBat|| isNextToWumpus || isNextToPit){
             System.out.println("\n    WARNING:");

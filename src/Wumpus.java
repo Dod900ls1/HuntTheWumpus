@@ -75,10 +75,10 @@ public class Wumpus {
             } while (newWumpusLocation == wumpusLocation);
             wumpusLocation = newWumpusLocation;
             if (wumpusLocation == currentPlace) {
-                System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
+                System.out.println("You missed. Wumpus heared you. It came to your cave and killed you.");
                 return false;
             } else {
-                System.out.println("You missed. Wumpus heared you. He relocated to other cave.");
+                System.out.println("You missed. Wumpus heared you. It relocated to other cave.");
             }
         }
         return true;

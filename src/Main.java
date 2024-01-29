@@ -5,12 +5,12 @@ public class Main {
 
     public static void main(String[] args) {
         boolean runGame = true;
-        Player player = new Player();
-        GameStarter gameStarter = new GameStarter();
         Wumpus wumpus0 = new Wumpus();
         Wumpus wumpus1 = new Wumpus();
-        Bat bat = new Bat();
         Game game = new Game(wumpus0, wumpus1);
+        Player player = new Player(game);
+        GameStarter gameStarter = new GameStarter();
+        Bat bat = new Bat();
         
         
         System.out.println("Do you want to see instructions? (Y/N)");
@@ -19,8 +19,8 @@ public class Main {
         
         // Main loop
         while (runGame) {
-            player.locationOutput(game);
-            game.checkWarnings(player,game);
+            player.locationOutput();
+            game.checkWarnings(player);
             player.getPlace();
             char shotOrWalk = game.getUserInput();
             switch (shotOrWalk) {
@@ -37,7 +37,7 @@ public class Main {
                     }
                     break;
                 case 'S':
-                    runGame = player.shootArrow(game);
+                    runGame = player.shootArrow();
                     break;
                 default:
                     System.out.println("There's no such option.");

@@ -12,6 +12,18 @@ public class Player {
     // Randomly generated starting cave
     private int playerLocation = (int) (Math.random() * ((20) + 1));
 
+    // Create a new unassigned Game object
+    Game game;
+
+    /**
+     * Constructor to initialize the player class
+     * 
+     * @param game The Game object needed to access Game methods
+     */
+    public Player(Game game){
+        this.game = game;
+    }
+
     /**
      * Get the current player's location
      * 
@@ -35,10 +47,10 @@ public class Player {
      * 
      * @param game The Game object to access Game class methods
      */
-    public void locationOutput(Game game) {
+    public void locationOutput() {
         System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", playerLocation,
-                game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
-                game.generateCaveConnections().get(playerLocation)[2]);
+                this.game.generateCaveConnections().get(playerLocation)[0], this.game.generateCaveConnections().get(playerLocation)[1],
+                this.game.generateCaveConnections().get(playerLocation)[2]);
     }
 
     /**
@@ -48,9 +60,9 @@ public class Player {
      * @param game The game object needed to access Game class methods
      * @return Whether the move made is valid or not
      */
-    public boolean isRightStep(int input, Game game) {
+    public boolean isRightStep(int input) {
         // Check if the input cave is among the connected caves
-        for (int i : game.generateCaveConnections().get(playerLocation)) {
+        for (int i : this.game.generateCaveConnections().get(playerLocation)) {
             if (i == input) {
                 return true;
             }
@@ -65,13 +77,13 @@ public class Player {
      * 
      * @return whether user is next to wumpus
      */
-    public boolean nextToWumpus(Game game) {
+    public boolean nextToWumpus() {
 
         for (Wumpus wumpus : game.getWumpusArr()) {
             //Checks whether the any joined nodes of cave location contains Wumpus
-            if ((game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
-            || game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
-            || game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc())) {
+            if ((this.game.generateCaveConnections().get(playerLocation)[0] == wumpus.getWumpusLoc()
+            || this.game.generateCaveConnections().get(playerLocation)[1] == wumpus.getWumpusLoc()
+            || this.game.generateCaveConnections().get(playerLocation)[2] == wumpus.getWumpusLoc())) {
                 return true;
             }
         }
@@ -85,12 +97,12 @@ public class Player {
      * 
      * @return whether user is next to bats
      */
-    public boolean nextToBats(Game game) {
+    public boolean nextToBats() {
         //Checks whether the any joined nodes of cave location contains Bats
-        for (int i : game.getBatsArr()) {
-            if (game.generateCaveConnections().get(playerLocation)[0] == i
-                    || game.generateCaveConnections().get(playerLocation)[1] == i
-                    || game.generateCaveConnections().get(playerLocation)[2] == i) {
+        for (int i : this.game.getBatsArr()) {
+            if (this.game.generateCaveConnections().get(playerLocation)[0] == i
+                    || this.game.generateCaveConnections().get(playerLocation)[1] == i
+                    || this.game.generateCaveConnections().get(playerLocation)[2] == i) {
                 return true;
             }
         }
@@ -104,12 +116,12 @@ public class Player {
      * 
      * @return whether user is next to pits
      */
-    public boolean nextToPits(Game game) {
+    public boolean nextToPits() {
         ////Checks whether the any joined nodes of cave location contains Pits
-        for (int i : game.getPitsArr()) {
-            if (game.generateCaveConnections().get(playerLocation)[0] == i
-                    || game.generateCaveConnections().get(playerLocation)[1] == i
-                    || game.generateCaveConnections().get(playerLocation)[2] == i) {
+        for (int i : this.game.getPitsArr()) {
+            if (this.game.generateCaveConnections().get(playerLocation)[0] == i
+                    || this.game.generateCaveConnections().get(playerLocation)[1] == i
+                    || this.game.generateCaveConnections().get(playerLocation)[2] == i) {
                 return true;
             }
         }
@@ -138,12 +150,12 @@ public class Player {
      * @param shot The location of where the shot was placed
      * @param game The Game object needed to access Game class methods
      */
-    private void killBat(int shot,Game game) {
+    private void killBat(int shot) {
         //Checks whether the location of the shot contains a bat
-        for (int i : game.getBatsArr()) {
+        for (int i : this.game.getBatsArr()) {
             if (shot == i) {
                 System.out.println("You killed the bat!");
-                game.setBats(indexOf(game.getBatsArr(), shot),-1); // Removes this bat
+                this.game.setBats(indexOf(this.game.getBatsArr(), shot),-1); // Removes this bat
             }
         }
     }
@@ -198,11 +210,11 @@ public class Player {
      * @return boolean of whether game continues
      */
 
-    public boolean shootArrow(Game game) {
+    public boolean shootArrow() {
 
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
-                game.generateCaveConnections().get(playerLocation)[0], game.generateCaveConnections().get(playerLocation)[1],
-                game.generateCaveConnections().get(playerLocation)[2]);
+                this.game.generateCaveConnections().get(playerLocation)[0], this.game.generateCaveConnections().get(playerLocation)[1],
+                this.game.generateCaveConnections().get(playerLocation)[2]);
 
         boolean validInput = false;
 
@@ -211,16 +223,16 @@ public class Player {
                 int shot = scanner.nextInt();
 
                 //Checks whether arrow is permittable
-                if (isRightStep(shot, game)) {
+                if (isRightStep(shot)) {
                     validInput = true;
 
                     //Checks individual components that can affect game in order of importance
-                    killBat(shot,game);
-                    for (Wumpus wumpus : game.getWumpusArr()) {
+                    killBat(shot);
+                    for (Wumpus wumpus : this.game.getWumpusArr()) {
                         if (!killWumpus(shot,wumpus)){
-                            return game.checkWumpusStatus();
+                            return this.game.checkWumpusStatus();
                         }
-                        if(!wumpus.scareWumpus(shot, playerLocation,game)){
+                        if(!wumpus.scareWumpus(shot, playerLocation,this.game)){
                             return false;
                         }
                     }
