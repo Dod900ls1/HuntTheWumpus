@@ -72,7 +72,7 @@ public class Wumpus {
             do {
                 // Generate a new random location until it's different from the wumpus`s location
                 newWumpusLocation = game.generateRandomNumber();
-            } while (newWumpusLocation == currentPlace);
+            } while (newWumpusLocation == wumpusLocation);
             wumpusLocation = newWumpusLocation;
             if (wumpusLocation == currentPlace) {
                 System.out.println("You missed. Wumpus heared you. He came to your cave and killed you.");
