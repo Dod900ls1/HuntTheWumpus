@@ -1,8 +1,13 @@
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
+import javax.json.*;
 
 public class Game {
 
@@ -12,17 +17,16 @@ public class Game {
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 
-
-    // Arrays to store pit locations, bat locations, Wumpus locations and Arrow locations
+    // Arrays to store pit locations, bat locations, Wumpus locations and Arrow
+    // locations
     private int[] pits;
     private int[] bats;
     private Wumpus[] arrWumpus = new Wumpus[2];
     private int[] arrowLocs;
 
-    //Set of all the locations already occupied
+    // Set of all the locations already occupied
     private Set<Integer> usedLocations = new HashSet<>();
 
-    
     /**
      * Constructor to initialize the game state
      * 
@@ -47,32 +51,33 @@ public class Game {
     /**
      * Returns individual location of pit.
      * 
-     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param index Used to indicate the location to find the exact needed
+     *              coordinate
      * 
      * @return The individual pit location
      */
-    public int getPits(int index){
+    public int getPits(int index) {
         return pits[index];
     }
 
-    
     /**
      * Returns Array of location of Pits.
      * 
      * @return The array of pit locations
      */
-    public int[] getPitsArr(){
-       return pits; 
+    public int[] getPitsArr() {
+        return pits;
     }
 
     /**
      * Returns individual location of bat.
      * 
-     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param index Used to indicate the location to find the exact needed
+     *              coordinate
      * 
      * @return The individual bat location
      */
-    public int getBats(int index){
+    public int getBats(int index) {
         return bats[index];
     }
 
@@ -81,17 +86,18 @@ public class Game {
      * 
      * @return The array of bat locations
      */
-    public int[] getBatsArr(){
+    public int[] getBatsArr() {
         return bats;
     }
 
     /**
      * Sets the location of an individual bat.
      * 
-     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param index  Used to indicate the location to find the exact needed
+     *               coordinate
      * @param newVal Used as the new location value for bats
      */
-    public void setBats(int index,int newVal){
+    public void setBats(int index, int newVal) {
         bats[index] = newVal;
     }
 
@@ -100,7 +106,7 @@ public class Game {
      * 
      * @return The array of wumpus
      */
-    public Wumpus[] getWumpusArr(){
+    public Wumpus[] getWumpusArr() {
         return arrWumpus;
     }
 
@@ -109,10 +115,10 @@ public class Game {
      * 
      * @return boolean of whether the game continues
      */
-    public boolean checkWumpusStatus(){
+    public boolean checkWumpusStatus() {
         for (Wumpus wumpus : getWumpusArr()) {
-            if(!wumpus.getWumpusDead()){
-                return true; //Set as true if either wumpus is alive
+            if (!wumpus.getWumpusDead()) {
+                return true; // Set as true if either wumpus is alive
             }
         }
         System.out.println("You've killed both Wumpuses. Very well done!");
@@ -124,17 +130,18 @@ public class Game {
      * 
      * @return The array of arrows locations
      */
-    public int[] getArrowLocsArr(){
+    public int[] getArrowLocsArr() {
         return arrowLocs;
     }
 
     /**
      * Sets the location of an individual arrows.
      * 
-     * @param index Used to indicate the location to find the exact needed coordinate
+     * @param index  Used to indicate the location to find the exact needed
+     *               coordinate
      * @param newVal Used as the new location value for arrows
      */
-    public void setArrowsLocs(int index,int newVal){
+    public void setArrowsLocs(int index, int newVal) {
         arrowLocs[index] = newVal;
     }
 
@@ -177,34 +184,35 @@ public class Game {
     /**
      * Method to define cave connections and return the HashMap
      * Caves form a dodecahedron.
+     * 
      * @return HashMap<Integer, Integer[]> which is the nodes that can be accessed
      */
     public HashMap<Integer, Integer[]> generateCaveConnections() {
-        caves.put(1, new Integer[] { 2, 8, 5 });
-        caves.put(2, new Integer[] { 1, 3, 10 });
-        caves.put(3, new Integer[] { 2, 12, 4 });
-        caves.put(4, new Integer[] { 3, 14, 5 });
-        caves.put(5, new Integer[] { 4, 6, 1 });
-        caves.put(6, new Integer[] { 5, 7, 15 });
-        caves.put(7, new Integer[] { 6, 8, 17 });
-        caves.put(8, new Integer[] { 1, 7, 9 });
-        caves.put(9, new Integer[] { 8, 18, 10 });
-        caves.put(10, new Integer[] { 9, 2, 11 });
-        caves.put(11, new Integer[] { 10, 19, 12 });
-        caves.put(12, new Integer[] { 3, 11, 13 });
-        caves.put(13, new Integer[] { 12, 14, 20 });
-        caves.put(14, new Integer[] { 4, 13, 15 });
-        caves.put(15, new Integer[] { 6, 14, 16 });
-        caves.put(16, new Integer[] { 15, 17, 20 });
-        caves.put(17, new Integer[] { 7, 18, 16 });
-        caves.put(18, new Integer[] { 17, 9, 19 });
-        caves.put(19, new Integer[] { 11, 18, 20 });
-        caves.put(20, new Integer[] { 13, 16, 19 });
+        try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedron.json"))) {
+            JsonObject jsonRoot = reader.readObject();
 
+            // Get the "connections" JsonObject
+            JsonObject connectionsObject = jsonRoot.getJsonObject("connections");
+
+            // Iterate over the entries in "connections"
+            for (String key : connectionsObject.keySet()) {
+                JsonArray connectionArray = connectionsObject.getJsonArray(key);
+                caves.put(Integer.parseInt(key), convertJsonInteger(connectionArray));
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return caves;
     }
-
-
+    
+    private static Integer[] convertJsonInteger(JsonArray jsonArray) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            list.add(jsonArray.getInt(i));
+        }
+        return list.toArray(new Integer[0]);
+    }
     /**
      * Method to get user input for the next move
      * 
@@ -228,9 +236,9 @@ public class Game {
                 player.locationOutput();
                 int cave = scanner.nextInt();
 
-                //Checks whether the move chosen is valid
+                // Checks whether the move chosen is valid
                 if (player.isRightStep(cave)) {
-                    //If valid move, updates player's current location
+                    // If valid move, updates player's current location
                     validInput = true;
                     player.setPlace(cave);
                 } else {
@@ -251,9 +259,9 @@ public class Game {
      * @return boolean of whether game is still running
      */
     public boolean pitTrap(int currentPlace) {
-        //Checks whether the current location is same as those of pits
+        // Checks whether the current location is same as those of pits
         if (currentPlace == pits[0] || currentPlace == pits[1]) {
-            //If so, output end statement and End Game
+            // If so, output end statement and End Game
             System.out.println("HAHAHA! YOU FALL IN A PIT AND DIE!");
             return false;
         } else {
@@ -265,22 +273,22 @@ public class Game {
      * Check if the player is next to any Dangers. If so, output this:
      * 
      * @param player the Player object required to access Player methods
-     * @param game the Game object required to access Game methods
+     * @param game   the Game object required to access Game methods
      */
-    public void checkWarnings(Player player){
+    public void checkWarnings(Player player) {
         boolean isNextToWumpus = player.nextToWumpus();
         boolean isNextToBat = player.nextToBats();
         boolean isNextToPit = player.nextToPits();
 
-        if(isNextToBat|| isNextToWumpus || isNextToPit){
+        if (isNextToBat || isNextToWumpus || isNextToPit) {
             System.out.println("\n    WARNING:");
-            if(isNextToWumpus){
+            if (isNextToWumpus) {
                 System.out.println("\tYou smell the Wumpus in one of neighbour caves!");
             }
-            if(isNextToBat){
+            if (isNextToBat) {
                 System.out.println("\t You can hear Bats near you!");
             }
-            if(isNextToPit){
+            if (isNextToPit) {
                 System.out.println("\t You can feel the blowing of wind. Pit is near you!");
             }
             System.out.println();
