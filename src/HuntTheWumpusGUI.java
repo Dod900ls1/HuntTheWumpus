@@ -36,7 +36,7 @@ public class HuntTheWumpusGUI {
     
 
     private void moveButton(){
-
+        System.out.println(game.getBats(1));
         DrawMap drawMap = new DrawMap(); // Initialize the map
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
         caveNumberField1 = renderer.setTextField("Input cave number", 10, 100, 175, 20);
@@ -47,8 +47,17 @@ public class HuntTheWumpusGUI {
                     int playerMove = Integer.parseInt(caveNumberField1.getText());
                     if(player.isRightStep(playerMove)){
                         game.moveCave(player, playerMove);
+                        if(!game.pitTrap(player.getPlace())){
+                            JOptionPane.showMessageDialog(null, "You fall into a pit, you dead!");
+                            renderer.windowClose();
+                        }else if(!wumpus0.WumpusTrap(player.getPlace())||!wumpus1.WumpusTrap(player.getPlace())){
+                            JOptionPane.showMessageDialog(null, "You walk into a Wumpus cave and it eat you!");
+                            renderer.windowClose();
+                        } else if(!bat.batTrapGUI(player.getPlace(),game,player)){
+                            renderer.windowClose();
+                        }
                         drawMap.resetMap();
-                        drawMap.drawMap(playerMove);
+                        drawMap.drawMap(player.getPlace());
                     }else{
                         JOptionPane.showMessageDialog(null, "Invalid input! You can walk only to adjecent caves.");
                     }
