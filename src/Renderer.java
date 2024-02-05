@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
-
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class Renderer extends JPanel {
 
@@ -38,7 +40,7 @@ public class Renderer extends JPanel {
         // Set this instance of Renderer as the content pane
 
         frame.setContentPane(this);
-        frame.setLayout(new FlowLayout());
+        frame.setLayout(null);
         frame.setVisible(true);
     }
 
@@ -102,10 +104,44 @@ public class Renderer extends JPanel {
 
     public void setLabel(String text, int x, int y) {
         JLabel label = new JLabel(text);
-        label.setLocation(x, y);
+        label.setBounds(x, y, 100, 20);
         frame.add(label);
     }
 
-    // Example usage
+    public void setLabel(String text, int x, int y, int width, int height) {
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y, width, height);
+        frame.add(label);
+    }
 
+    public void setButton(String text, ActionListener listener, int x, int y){
+        JButton button = new JButton(text);
+        button.addActionListener(listener);
+        button.setBounds(x, y, 50, 50);
+        frame.add(button);
+    }
+
+    public void setTextField(String text, int x, int y){
+        JTextField textField = new JTextField(text);
+        textField.setBounds(x, y, 100, 30);
+
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(text)) {
+                    textField.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(text);
+                }
+            }
+        });
+
+        frame.add(textField);
+        frame.repaint();
+    }
 }

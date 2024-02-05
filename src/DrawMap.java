@@ -23,8 +23,6 @@ public class DrawMap {
                 double y = nodeObject.getJsonNumber("y").doubleValue();
                 renderer.setPlayerLocation(playerLocation);
                 renderer.setCircleCoordinates(id, (int) x, (int) y);
-                // Do something with the values (print them in this case)
-                System.out.println("Node ID: " + id + ", X: " + (int) x + ", Y: " + (int) y);
             }
         } catch (IOException e) {
             e.printStackTrace();
