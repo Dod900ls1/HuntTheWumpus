@@ -156,6 +156,16 @@ public class Player {
         }
     }
 
+    private void killBatGUI(int shot) {
+        //Checks whether the location of the shot contains a bat
+        for (int i : this.game.getBatsArr()) {
+            if (shot == i) {
+                System.out.println("You killed the bat!");
+                JOptionPane.showMessageDialog(null, "You killed a bat!");
+                this.game.setBats(indexOf(this.game.getBatsArr(), shot),-1); // Removes this bat
+            }
+        }
+    }
     /**
      * Checks if player killed the Wumpus. If they did, congratulate the player and
      * terminate the game.
@@ -265,33 +275,45 @@ public class Player {
     }
 
     public boolean shootArrow(int shot) {
-            try {
-                //Checks whether arrow is permittable
-                if (isRightStep(shot)) {
-                    //Checks individual components that can affect game in order of importance
-                    killBat(shot);
-                    for (Wumpus wumpus : this.game.getWumpusArr()) {
-                        if (!killWumpus(shot,wumpus)){
-                            if (this.game.checkWumpusStatus()) {
-                                JOptionPane.showMessageDialog(null, "You've killed one Wumpus, good job!");
-                            }else{
-                                JOptionPane.showMessageDialog(null, "You've killed both Wumpuses, you won!");
-                                return this.game.checkWumpusStatus();
-                            }
-                        }
-                        if(!wumpus.scareWumpus(shot, playerLocation,this.game)){
-                            JOptionPane.showMessageDialog(null, "You've been killed by a Wumpus.");
-                            return false;
-                        }
-                    }
-                    if (!arrowCounter())
-                        return false;
-                }
-            } catch (InputMismatchException e) {
-                //Used if invalid input is written
-                System.out.println("Invalid input. Please enter an integer.");
-                scanner.nextLine();
+        try {
+            if (!isRightStep(shot)) {
+                System.out.println("You can shoot only in adjacent caves.");
+                return true; // Player has arrows left
             }
+    
+            killBatGUI(shot);
+    
+            for (Wumpus wumpus : this.game.getWumpusArr()) {
+                if (!killWumpusAndCheckGameStatus(shot, wumpus)) {
+                    return this.game.checkWumpusStatus();
+                }
+    
+                if (!wumpus.scareWumpus(shot, playerLocation, this.game)) {
+                    JOptionPane.showMessageDialog(null, "You've been killed by a Wumpus.");
+                    return false;
+                }
+            }
+    
+            return arrowCounter();
+    
+        } catch (InputMismatchException e) {
+            // Used if invalid input is written
+            System.out.println("Invalid input. Please enter an integer.");
+            scanner.nextLine();
+        }
+    
+        return true;
+    }
+    
+    private boolean killWumpusAndCheckGameStatus(int shot, Wumpus wumpus) {
+        if (!killWumpus(shot, wumpus)) {
+            if (this.game.checkWumpusStatus()) {
+                JOptionPane.showMessageDialog(null, "You've killed one Wumpus, good job!");
+            } else {
+                JOptionPane.showMessageDialog(null, "You've killed both Wumpuses, you won!");
+                return false;
+            }
+        }
         return true;
     }
 }

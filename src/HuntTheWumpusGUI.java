@@ -89,8 +89,6 @@ public class HuntTheWumpusGUI {
         };
         
         renderer.setButton("Shoot", shootListener, 40, 400);
-
-        renderer.setButton("Shoot", shootListener, 40, 400);
     }
 
     private void arrowCounter(int arrowCount){
