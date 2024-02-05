@@ -173,12 +173,12 @@ public class Game {
     }
 
     /**
-     * Method to generate random number between 1 and 20 (inclusive)
+     * Method to generate random number between 0 and 19 (inclusive)
      * 
      * @return the randomised number
      */
     public int generateRandomNumber() {
-        return (int) (Math.random() * 20) + 1; // Generate random number from 1 to 20 inclusive
+        return (int) (Math.random() * 20); 
     }
 
     /**
@@ -205,7 +205,7 @@ public class Game {
         }
         return caves;
     }
-    
+
     private static Integer[] convertJsonInteger(JsonArray jsonArray) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {
@@ -213,6 +213,7 @@ public class Game {
         }
         return list.toArray(new Integer[0]);
     }
+
     /**
      * Method to get user input for the next move
      * 
@@ -253,29 +254,28 @@ public class Game {
     }
 
     /**
-     * Overriden method for HuntTheWumpusGUI. Gets move from a JTextField on the screen.
+     * Overriden method for HuntTheWumpusGUI. Gets move from a JTextField on the
+     * screen.
+     * 
      * @param player
      * @param move
      */
     public void moveCave(Player player, int move) {
-        boolean validInput = false;
 
-        while (!validInput) {
-            try {
-                player.locationOutput();
-                if (player.isRightStep(move)) {
-                    // If valid move, updates player's current location
-                    validInput = true;
-                    player.setPlace(move);
-                } else {
-                    System.out.println("Invalid input, you can walk only to neighbour caves!");
-                }
-            } catch (InputMismatchException e) {
-                // Ask user for valid input
-                System.out.println("Invalid input. Please enter an integer.");
-                validInput = true;
+        try {
+            player.locationOutput();
+            if (player.isRightStep(move)) {
+                // If valid move, updates player's current location
+
+                player.setPlace(move);
+            } else {
+                System.out.println("Invalid input, you can walk only to neighbour caves!");
             }
+        } catch (InputMismatchException e) {
+            // Ask user for valid input
+            System.out.println("Invalid input. Please enter an integer.");
         }
+
     }
 
     /**

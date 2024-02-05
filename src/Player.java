@@ -10,7 +10,7 @@ public class Player {
     private int arrows = 5;
 
     // Randomly generated starting cave
-    private int playerLocation = (int) (Math.random() * ((20) + 1));
+    private int playerLocation = (int) (Math.random() * 20); 
 
     // Create a new unassigned Game object
     Game game;
