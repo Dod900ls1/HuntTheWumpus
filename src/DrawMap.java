@@ -55,5 +55,9 @@ public class DrawMap {
         drawEdges();
     }
 
+    public void resetMap() {
+        renderer.clearCoordinates();
+        renderer.clearLineIndexes();
+    }
 
 }

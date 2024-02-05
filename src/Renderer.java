@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
+import java.util.Arrays;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -65,14 +66,30 @@ public class Renderer extends JPanel {
         }
     }
 
+    public void erase() {
+        frame.getContentPane().removeAll();
+    }
+
+    public void clearCoordinates() {
+        Arrays.fill(circleX, 0);
+        Arrays.fill(circleY, 0);
+        frame.repaint();
+    }
+
+    public void clearLineIndexes() {
+        Arrays.fill(lineIndexes1, 0);
+        Arrays.fill(lineIndexes2, 0);
+        frame.repaint();
+    }
+
     public void drawLines(Graphics g) {
         for (int i = 1; i < lineIndexes1.length; i++) {
             Graphics2D g2 = (Graphics2D) g;
-            int startX = circleX[lineIndexes1[i]] + 10; 
-            int startY = circleY[lineIndexes1[i]] + 10; 
-            int endX = circleX[lineIndexes2[i]] + 10; 
-            int endY = circleY[lineIndexes2[i]] + 10; 
-    
+            int startX = circleX[lineIndexes1[i]] + 10;
+            int startY = circleY[lineIndexes1[i]] + 10;
+            int endX = circleX[lineIndexes2[i]] + 10;
+            int endY = circleY[lineIndexes2[i]] + 10;
+
             Line2D lin = new Line2D.Float(startX, startY, endX, endY);
             g2.draw(lin);
             g2.draw(lin);
@@ -102,28 +119,23 @@ public class Renderer extends JPanel {
         }
     }
 
-    public void setLabel(String text, int x, int y) {
-        JLabel label = new JLabel(text);
-        label.setBounds(x, y, 100, 20);
-        frame.add(label);
-    }
-
     public void setLabel(String text, int x, int y, int width, int height) {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
         frame.add(label);
     }
 
-    public void setButton(String text, ActionListener listener, int x, int y){
+    public void setButton(String text, ActionListener listener, int x, int y) {
         JButton button = new JButton(text);
         button.addActionListener(listener);
-        button.setBounds(x, y, 50, 50);
+        button.setBounds(x, y, 100, 100);
         frame.add(button);
+        frame.repaint();
     }
 
-    public void setTextField(String text, int x, int y){
+    public JTextField setTextField(String text, int x, int y, int width, int height) {
         JTextField textField = new JTextField(text);
-        textField.setBounds(x, y, 100, 30);
+        textField.setBounds(x, y, width, height);
 
         textField.addFocusListener(new FocusListener() {
             @Override
@@ -143,5 +155,7 @@ public class Renderer extends JPanel {
 
         frame.add(textField);
         frame.repaint();
+
+        return textField;
     }
 }

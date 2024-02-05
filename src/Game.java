@@ -188,7 +188,7 @@ public class Game {
      * @return HashMap<Integer, Integer[]> which is the nodes that can be accessed
      */
     public HashMap<Integer, Integer[]> generateCaveConnections() {
-        try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedron.json"))) {
+        try (JsonReader reader = Json.createReader(new FileReader("../NodeGenerator/dodecahedronCorrected.json"))) {
             JsonObject jsonRoot = reader.readObject();
 
             // Get the "connections" JsonObject
@@ -248,6 +248,32 @@ public class Game {
                 // Ask user for valid input
                 System.out.println("Invalid input. Please enter an integer.");
                 scanner.nextLine();
+            }
+        }
+    }
+
+    /**
+     * Overriden method for HuntTheWumpusGUI. Gets move from a JTextField on the screen.
+     * @param player
+     * @param move
+     */
+    public void moveCave(Player player, int move) {
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                player.locationOutput();
+                if (player.isRightStep(move)) {
+                    // If valid move, updates player's current location
+                    validInput = true;
+                    player.setPlace(move);
+                } else {
+                    System.out.println("Invalid input, you can walk only to neighbour caves!");
+                }
+            } catch (InputMismatchException e) {
+                // Ask user for valid input
+                System.out.println("Invalid input. Please enter an integer.");
+                validInput = true;
             }
         }
     }

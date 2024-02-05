@@ -1,7 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+import javax.swing.JTextField;
 
 public class HuntTheWumpusGUI {
 
@@ -10,23 +10,25 @@ public class HuntTheWumpusGUI {
         Wumpus wumpus1 = new Wumpus();
         Game game = new Game(wumpus0, wumpus1);
         Player player = new Player(game);
-
         Renderer renderer = Renderer.getInstance();
-        renderer.setLabel("null", 100, 100);
-        renderer.setLabel("null", 100, 200);
 
-        ActionListener listener = new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                System.out.println("Funny");
-            }
-        };
-        renderer.setButton("M", listener, 200, 50);
-        renderer.setLabel("null", 0, 0);
         DrawMap drawMap = new DrawMap();
         drawMap.drawMap(player.getPlace());
-        renderer.setTextField("Funny", 100, 0);
+ 
+        renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
+        JTextField caveNumberField = renderer.setTextField("Cave number", 10, 100, 175, 20);
+ 
+        ActionListener listener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int playerMove = Integer.parseInt(caveNumberField.getText());
+                game.moveCave(player, playerMove);
+                drawMap.resetMap();
+                drawMap.drawMap(playerMove);
+                
+            }
+        };
 
-        
-        
+        renderer.setButton("Move", listener, 40, 150);
+
     }
 }
