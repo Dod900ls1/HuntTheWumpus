@@ -66,6 +66,12 @@ public class Bat {
         return true;
     }
 
+    /**
+     * Generate a unique location for player
+     * @param game
+     * @param player
+     * @return player`s location
+     */
     private int generateUniquePlayerLocation(Game game, Player player){
         int randomNumber;
         do {

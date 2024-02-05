@@ -45,30 +45,40 @@ public class HuntTheWumpusGUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     int playerMove = Integer.parseInt(caveNumberField1.getText());
-                    if(player.isRightStep(playerMove)){
+                    if (player.isRightStep(playerMove)) {
                         game.moveCave(player, playerMove);
-                        if(!game.pitTrap(player.getPlace())){
-                            JOptionPane.showMessageDialog(null, "You fall into a pit, you dead!");
-                            renderer.windowClose();
-                        }else if(!wumpus0.WumpusTrap(player.getPlace())||!wumpus1.WumpusTrap(player.getPlace())){
-                            JOptionPane.showMessageDialog(null, "You walk into a Wumpus cave and it eat you!");
-                            renderer.windowClose();
-                        } else if(!bat.batTrapGUI(player.getPlace(),game,player)){
-                            renderer.windowClose();
-                        }
+                        handleGameEvents();
                         drawMap.resetMap();
                         drawMap.drawMap(player.getPlace());
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Invalid input! You can walk only to adjecent caves.");
+                    } else {
+                        showErrorMessage("Invalid input! You can walk only to adjacent caves.");
                     }
                 } catch (NumberFormatException ex) {
                     // Handle the case when the input is not an integer
-                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid integer.");
+                    showErrorMessage("Invalid input! Please enter a valid integer.");
                 }
-
+            }
+        
+            private void handleGameEvents() {
+                if (!game.pitTrap(player.getPlace())) {
+                    showMessageAndClose("You fall into a pit, you're dead!");
+                } else if (!wumpus0.WumpusTrap(player.getPlace()) || !wumpus1.WumpusTrap(player.getPlace())) {
+                    showMessageAndClose("You walk into a Wumpus cave and it eats you!");
+                } else if (!bat.batTrapGUI(player.getPlace(), game, player)) {
+                    renderer.windowClose();
+                }
+            }
+        
+            private void showErrorMessage(String message) {
+                JOptionPane.showMessageDialog(null, message);
+            }
+        
+            private void showMessageAndClose(String message) {
+                JOptionPane.showMessageDialog(null, message);
+                renderer.windowClose();
             }
         };
-
+        
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
