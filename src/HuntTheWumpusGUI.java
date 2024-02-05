@@ -7,8 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class HuntTheWumpusGUI {
-    private int[] pits;
-    private int[] bats;
+    private Bat bat;
     private Wumpus wumpus0;
     private Wumpus wumpus1;
     private Game game;
@@ -20,12 +19,11 @@ public class HuntTheWumpusGUI {
     private JLabel arrowLabel;
 
     public HuntTheWumpusGUI(){
-        
         wumpus0 = new Wumpus();
         wumpus1 = new Wumpus();
         game = new Game(wumpus0, wumpus1);
-        pits = game.generateUniqueLocations(2);
         player = new Player(game);
+        bat = new Bat();
         renderer = Renderer.getInstance();
         drawMap = new DrawMap();
         drawMap.drawMap(player.getPlace());
@@ -35,8 +33,10 @@ public class HuntTheWumpusGUI {
         arrowCounter(player.getArrows());
     }
 
+    
+
     private void moveButton(){
-        
+
         DrawMap drawMap = new DrawMap(); // Initialize the map
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
         caveNumberField1 = renderer.setTextField("Input cave number", 10, 100, 175, 20);

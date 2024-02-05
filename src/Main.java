@@ -9,8 +9,8 @@ public class Main {
         Wumpus wumpus1 = new Wumpus();
         Game game = new Game(wumpus0, wumpus1);
         Player player = new Player(game);
-        GameStarter gameStarter = new GameStarter();
         Bat bat = new Bat();
+        GameStarter gameStarter = new GameStarter();
         
         
         System.out.println("Do you want to see instructions? (Y/N)");
