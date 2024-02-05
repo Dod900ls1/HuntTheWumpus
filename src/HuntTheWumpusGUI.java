@@ -5,23 +5,34 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class HuntTheWumpusGUI {
+    Wumpus wumpus0;
+    Wumpus wumpus1;
+    Game game;
+    Player player;
+    Renderer renderer;
+    DrawMap drawMap;
 
-    public static void main(String[] args) {
-        Wumpus wumpus0 = new Wumpus();
-        Wumpus wumpus1 = new Wumpus();
-        Game game = new Game(wumpus0, wumpus1);
-        Player player = new Player(game);
-        Renderer renderer = Renderer.getInstance();
+    public HuntTheWumpusGUI(){
+        wumpus0 = new Wumpus();
+        wumpus1 = new Wumpus();
+        game = new Game(wumpus0, wumpus1);
+        player = new Player(game);
+        renderer = Renderer.getInstance();
+        drawMap = new DrawMap();
 
-        DrawMap drawMap = new DrawMap();
         drawMap.drawMap(player.getPlace());
+        moveButton();
+    }
+
+    private void moveButton(){
 
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
         JTextField caveNumberField = renderer.setTextField("Cave number", 10, 100, 175, 20);
 
-        ActionListener listener = new ActionListener() {
+        ActionListener moveListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
+                    DrawMap drawMap = new DrawMap();
                     int playerMove = Integer.parseInt(caveNumberField.getText());
                     if(player.isRightStep(playerMove)){
                         game.moveCave(player, playerMove);
@@ -38,7 +49,9 @@ public class HuntTheWumpusGUI {
             }
         };
 
-        renderer.setButton("Move", listener, 40, 150);
-
+        renderer.setButton("Move", moveListener, 40, 150);
+    }
+    public static void main(String[] args) {
+        new HuntTheWumpusGUI();
     }
 }
