@@ -1,16 +1,20 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class HuntTheWumpusGUI {
-    Wumpus wumpus0;
-    Wumpus wumpus1;
-    Game game;
-    Player player;
-    Renderer renderer;
-    DrawMap drawMap;
+    private Wumpus wumpus0;
+    private Wumpus wumpus1;
+    private Game game;
+    private Player player;
+    private Renderer renderer;
+    private DrawMap drawMap;
+    private JTextField caveNumberField1;
+    private JTextField caveNumberField2;
+    private JLabel arrowLabel;
 
     public HuntTheWumpusGUI(){
         wumpus0 = new Wumpus();
@@ -19,22 +23,22 @@ public class HuntTheWumpusGUI {
         player = new Player(game);
         renderer = Renderer.getInstance();
         drawMap = new DrawMap();
-
         drawMap.drawMap(player.getPlace());
+        
         moveButton();
-        shootButton();
+        shotButton();
     }
 
     private void moveButton(){
-
+        
+        DrawMap drawMap = new DrawMap(); // Initialize the map
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
-        JTextField caveNumberField = renderer.setTextField("Input cave number", 10, 100, 175, 20);
+        caveNumberField1 = renderer.setTextField("Input cave number", 10, 100, 175, 20);
 
         ActionListener moveListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DrawMap drawMap = new DrawMap();
-                    int playerMove = Integer.parseInt(caveNumberField.getText());
+                    int playerMove = Integer.parseInt(caveNumberField1.getText());
                     if(player.isRightStep(playerMove)){
                         game.moveCave(player, playerMove);
                         drawMap.resetMap();
@@ -53,13 +57,26 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
-    private void shootButton(){
+    private void shotButton(){
         renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
-        JTextField caveNumberField = renderer.setTextField("Input cave number", 10, 350, 175, 20);
+        caveNumberField2 = renderer.setTextField("Input cave number", 10, 350, 175, 20);
 
         ActionListener shootListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Funny");
+                try {
+                    int playerShot = Integer.parseInt(caveNumberField2.getText());
+                    if(player.isRightStep(playerShot)){
+                        if(!player.shootArrow(playerShot)){
+                            renderer.windowClose();
+                        }else{
+                            System.out.println(player.getArrows()); 
+                        }
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Invalid input! You can shot only to adjecent caves.");    
+                    }
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid integer.");
+                }
             }
         };
 

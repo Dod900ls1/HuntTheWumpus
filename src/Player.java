@@ -1,6 +1,8 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Player {
 
     // Scanner for user input
@@ -33,6 +35,9 @@ public class Player {
         return this.playerLocation;
     }
 
+    public int getArrows(){
+        return this.arrows;
+    }
     /**
      * sets the current player's location
      * 
@@ -256,6 +261,37 @@ public class Player {
                 scanner.nextLine();
             }
         }
+        return true;
+    }
+
+    public boolean shootArrow(int shot) {
+            try {
+                //Checks whether arrow is permittable
+                if (isRightStep(shot)) {
+                    //Checks individual components that can affect game in order of importance
+                    killBat(shot);
+                    for (Wumpus wumpus : this.game.getWumpusArr()) {
+                        if (!killWumpus(shot,wumpus)){
+                            if (this.game.checkWumpusStatus()) {
+                                JOptionPane.showMessageDialog(null, "You've killed one Wumpus, good job!");
+                            }else{
+                                JOptionPane.showMessageDialog(null, "You've killed both Wumpuses, you won!");
+                                return this.game.checkWumpusStatus();
+                            }
+                        }
+                        if(!wumpus.scareWumpus(shot, playerLocation,this.game)){
+                            JOptionPane.showMessageDialog(null, "You've been killed by a Wumpus.");
+                            return false;
+                        }
+                    }
+                    if (!arrowCounter())
+                        return false;
+                }
+            } catch (InputMismatchException e) {
+                //Used if invalid input is written
+                System.out.println("Invalid input. Please enter an integer.");
+                scanner.nextLine();
+            }
         return true;
     }
 }

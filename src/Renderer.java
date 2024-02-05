@@ -5,6 +5,7 @@ import java.awt.geom.Line2D;
 import java.util.Arrays;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.WindowEvent;
 
 public class Renderer extends JPanel {
 
@@ -68,6 +69,10 @@ public class Renderer extends JPanel {
 
     public void erase() {
         frame.getContentPane().removeAll();
+    }
+
+    public void windowClose(){
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
     public void clearCoordinates() {
