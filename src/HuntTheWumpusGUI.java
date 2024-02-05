@@ -1,3 +1,4 @@
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,6 +28,7 @@ public class HuntTheWumpusGUI {
         
         moveButton();
         shotButton();
+        arrowCounter(player.getArrows());
     }
 
     private void moveButton(){
@@ -57,6 +59,7 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
+
     private void shotButton(){
         renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
         caveNumberField2 = renderer.setTextField("Input cave number", 10, 350, 175, 20);
@@ -65,22 +68,35 @@ public class HuntTheWumpusGUI {
             public void actionPerformed(ActionEvent e) {
                 try {
                     int playerShot = Integer.parseInt(caveNumberField2.getText());
-                    if(player.isRightStep(playerShot)){
-                        if(!player.shootArrow(playerShot)){
-                            renderer.windowClose();
-                        }else{
-                            System.out.println(player.getArrows()); 
-                        }
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Invalid input! You can shot only to adjecent caves.");    
+                    
+                    if (!player.isRightStep(playerShot)) {
+                        JOptionPane.showMessageDialog(null, "Invalid input! You can shoot only to adjacent caves."); // Output error message
+                        return;
                     }
+        
+                    if (!player.shootArrow(playerShot)) {
+                        renderer.windowClose();
+                        return;
+                    }
+        
+                    renderer.removeLabel(arrowLabel);
+                    arrowCounter(player.getArrows());
+        
                 } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid integer.");
+                    JOptionPane.showMessageDialog(null, "Invalid input! Please enter a valid integer."); // Error message
                 }
             }
         };
+        
+        renderer.setButton("Shoot", shootListener, 40, 400);
 
         renderer.setButton("Shoot", shootListener, 40, 400);
+    }
+
+    private void arrowCounter(int arrowCount){
+        renderer.setLabel("Arrows left", 700, 50, 170, 30);
+        Font arrowFont = new Font("Arial", Font.BOLD, 20);
+        arrowLabel = renderer.setLabel(String.valueOf(arrowCount), 740, 100, 50, 50, arrowFont);
     }
     public static void main(String[] args) {
         new HuntTheWumpusGUI();

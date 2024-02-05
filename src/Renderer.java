@@ -124,10 +124,32 @@ public class Renderer extends JPanel {
         }
     }
 
-    public void setLabel(String text, int x, int y, int width, int height) {
+    public JLabel setLabel(String text, int x, int y, int width, int height) {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
         frame.add(label);
+
+        return label;
+    }
+
+    public JLabel setLabel(String text, int x, int y, int width, int height, Font font) {
+        JLabel label = new JLabel(text);
+        label.setBounds(x, y, width, height);
+        label.setFont(font); 
+        frame.add(label);
+        frame.repaint();
+    
+        return label;
+    }
+
+    public void removeLabel(JLabel labelToRemove) {
+        Container container = labelToRemove.getParent();
+        
+        if (container != null) {
+            container.remove(labelToRemove);
+            container.revalidate();
+            container.repaint();
+        }
     }
 
     public void setButton(String text, ActionListener listener, int x, int y) {
