@@ -22,12 +22,13 @@ public class HuntTheWumpusGUI {
 
         drawMap.drawMap(player.getPlace());
         moveButton();
+        shootButton();
     }
 
     private void moveButton(){
 
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
-        JTextField caveNumberField = renderer.setTextField("Cave number", 10, 100, 175, 20);
+        JTextField caveNumberField = renderer.setTextField("Input cave number", 10, 100, 175, 20);
 
         ActionListener moveListener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -50,6 +51,19 @@ public class HuntTheWumpusGUI {
         };
 
         renderer.setButton("Move", moveListener, 40, 150);
+    }
+
+    private void shootButton(){
+        renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
+        JTextField caveNumberField = renderer.setTextField("Input cave number", 10, 350, 175, 20);
+
+        ActionListener shootListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Funny");
+            }
+        };
+
+        renderer.setButton("Shoot", shootListener, 40, 400);
     }
     public static void main(String[] args) {
         new HuntTheWumpusGUI();
