@@ -8,9 +8,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import javax.json.*;
+import javax.swing.JLabel;
 
 public class Game {
 
+    Renderer renderer = Renderer.getInstance();
+    private JLabel warning1;
+    private JLabel warning2;
+    private JLabel warning3;
     // HashMap to store cave connections
     private HashMap<Integer, Integer[]> caves = new HashMap<>();
 
@@ -320,4 +325,45 @@ public class Game {
             System.out.println();
         }
     }
+
+/**
+ * Check if the player is next to any Dangers. If so, output this:
+ * 
+ * @param player the Player object required to access Player methods
+ * @param game   the Game object required to access Game methods
+ */
+public void checkWarningsGUI(Player player) {
+    boolean isNextToWumpus = player.nextToWumpus();
+    boolean isNextToBat = player.nextToBats();
+    boolean isNextToPit = player.nextToPits();
+
+    if (isNextToBat || isNextToWumpus || isNextToPit) {
+        renderer.setLabel("Warnings:", 650, 150, 170, 30);
+        
+        if (isNextToWumpus) {
+            warning1 = renderer.setLabel("You smell the Wumpus in one of neighbor caves!", 650, 200, 170, 30);
+        } else {
+            if (warning1 != null) {
+                renderer.removeLabel(warning1);
+            }
+        }
+
+        if (isNextToBat) {
+            warning2 = renderer.setLabel("You can hear Bats near you!", 650, 250, 170, 30);
+        } else {
+            if (warning2 != null) {
+                renderer.removeLabel(warning2);
+            }
+        }
+
+        if (isNextToPit) {
+            warning3 = renderer.setLabel("You can feel a breeze of wind. A pit is near you!", 650, 300, 170, 30);
+        } else {
+            if (warning3 != null) {
+                renderer.removeLabel(warning3);
+            }
+        }
+    }
+}
+
 }

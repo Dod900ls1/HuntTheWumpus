@@ -28,13 +28,15 @@ public class HuntTheWumpusGUI {
         drawMap = new DrawMap();
         drawMap.drawMap(player.getPlace());
         
+        game.checkWarningsGUI(player);
         moveButton();
         shotButton();
         arrowCounter(player.getArrows());
+        warningWindow();
     }
 
     
-
+    // TODO - Clear text input after we pressed the move button
     private void moveButton(){
         System.out.println(game.getBats(1));
         DrawMap drawMap = new DrawMap(); // Initialize the map
@@ -82,7 +84,7 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
-
+    // TODO - Clear text input after we pressed the shot button
     private void shotButton(){
         renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
         caveNumberField2 = renderer.setTextField("Input cave number", 10, 350, 175, 20);
@@ -115,9 +117,13 @@ public class HuntTheWumpusGUI {
     }
 
     private void arrowCounter(int arrowCount){
-        renderer.setLabel("Arrows left", 700, 50, 170, 30);
+        renderer.setLabel("Arrows left", 650, 50, 170, 30);
         Font arrowFont = new Font("Arial", Font.BOLD, 20);
-        arrowLabel = renderer.setLabel(String.valueOf(arrowCount), 740, 100, 50, 50, arrowFont);
+        arrowLabel = renderer.setLabel(String.valueOf(arrowCount), 670, 80, 50, 50, arrowFont);
+    }
+
+    private void warningWindow(){
+        renderer.setLabel("Warnings:", 650, 150, 170, 30);
     }
     public static void main(String[] args) {
         new HuntTheWumpusGUI();
