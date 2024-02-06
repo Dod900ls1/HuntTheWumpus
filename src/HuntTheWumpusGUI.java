@@ -42,8 +42,12 @@ public class HuntTheWumpusGUI {
     }
 
 
+    /**
+     * This button allows user to walk
+     */
     private void moveButton() {
         System.out.println(game.getBats(1));
+        System.err.println(game.getArrowLocsArr()[1] + "   " + game.getArrowLocsArr()[0]);
         DrawMap drawMap = new DrawMap(); // Initialize the map
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
         caveNumberField1 = renderer.setTextField("Input cave number", 10, 100, 175, 20);
@@ -76,6 +80,7 @@ public class HuntTheWumpusGUI {
                 }
 
                 warningLabel(player);
+                onArrowGUI();
             }
 
             private void showErrorMessage(String message) {
@@ -91,7 +96,9 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
-
+    /**
+     * This button allows user to shot to adjecent cave
+     */
     private void shotButton() {
         renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
         caveNumberField2 = renderer.setTextField("Input cave number", 10, 350, 175, 20);
@@ -123,7 +130,36 @@ public class HuntTheWumpusGUI {
 
         renderer.setButton("Shoot", shootListener, 40, 400);
     }
-        /**
+
+/**
+ * Checks if the new location of player contains an uncollected arrow
+ * This is used to increase the number of arrows available. 
+ * GUI version
+ */
+private void onArrowGUI() {
+    for (int arrowLocale : game.getArrowLocsArr()) {
+        // Checks whether the location of the player contains an arrow
+        if (player.getPlace() == arrowLocale) {
+            int arrows = player.getArrows();
+            player.setArrows(arrows + 1);
+            JOptionPane.showMessageDialog(null, "You picked up an Arrow! You now have " + player.getArrows() + " arrows");
+            renderer.removeLabel(arrowLabel);
+            arrowCounter(player.getArrows());
+            this.game.setArrowsLocs(indexOf(this.game.getArrowLocsArr(), player.getPlace()), -1); // Removes this arrow
+        }
+    }
+}
+
+
+    private int indexOf(int[] arr, int element) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == element) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    /**
      * Check if the player is next to any Dangers. If so, output this:
      * 
      * @param player the Player object required to access Player methods
@@ -167,6 +203,10 @@ public class HuntTheWumpusGUI {
         }
     }
 
+    /**
+     * Counts arrows for user.
+     * @param arrowCount
+     */
     private void arrowCounter(int arrowCount) {
         renderer.setLabel("Arrows left", 650, 50, 170, 30);
         Font arrowFont = new Font("Arial", Font.BOLD, 20);

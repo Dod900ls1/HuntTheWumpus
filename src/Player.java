@@ -5,15 +5,20 @@ import javax.swing.JOptionPane;
 
 public class Player {
 
+    Renderer renderer = Renderer.getInstance();
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 
     // Initial number of arrows
     private int arrows = 5;
 
+    public void setArrows(int arrows) {
+        this.arrows = arrows;
+    }
+
     // Randomly generated starting cave
     private int playerLocation = (int) (Math.random() * 20); 
-
+    
     // Create a new unassigned Game object
     Game game;
 
@@ -226,13 +231,14 @@ public class Player {
 
     }
 
+
+
     /**
      * This method is responsible for the whole attack system in the game. Calls
      * killWumpus(), arrowCounter(), and scareWumpus() when it is appropriate.
      * 
      * @return boolean of whether game continues
      */
-
     public boolean shootArrow() {
 
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
@@ -274,6 +280,12 @@ public class Player {
         return true;
     }
 
+    /**
+     * This is a shootArrow method for out GUI version of the game. Does the same thing as previous version
+     * except for slight changes in errors handeling.
+     * @param shot
+     * @return
+     */
     public boolean shootArrow(int shot) {
         try {
             if (!isRightStep(shot)) {
@@ -305,6 +317,10 @@ public class Player {
         return true;
     }
     
+    /**
+     * Checks if we killed both Wumpuses or it's the only one. 
+     * Throws a messageDialog if we killed Wumpus.
+     */
     private boolean killWumpusAndCheckGameStatus(int shot, Wumpus wumpus) {
         if (!killWumpus(shot, wumpus)) {
             if (this.game.checkWumpusStatus()) {
