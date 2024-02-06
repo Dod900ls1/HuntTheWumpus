@@ -135,7 +135,7 @@ public class Renderer extends JPanel {
     public JLabel setLabel(String text, int x, int y, int width, int height, Font font) {
         JLabel label = new JLabel(text);
         label.setBounds(x, y, width, height);
-        label.setFont(font); 
+        label.setFont(font);
         frame.add(label);
         frame.repaint();
     
