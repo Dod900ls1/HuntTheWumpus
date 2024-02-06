@@ -299,8 +299,7 @@ public class Player {
                     return this.game.checkWumpusStatus();
                 }
     
-                if (!wumpus.scareWumpus(shot, playerLocation, this.game)) {
-                    JOptionPane.showMessageDialog(null, "You've been killed by a Wumpus.");
+                if (!wumpus.scareWumpusGUI(shot, playerLocation, this.game)) {
                     return false;
                 }
             }

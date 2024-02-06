@@ -39,7 +39,7 @@ public class Renderer extends JPanel {
     private void configFrame() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
-
+        frame.setResizable(false);
         // Set this instance of Renderer as the content pane
 
         frame.setContentPane(this);

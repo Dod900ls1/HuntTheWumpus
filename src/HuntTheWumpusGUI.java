@@ -35,6 +35,7 @@ public class HuntTheWumpusGUI {
             drawMap = new DrawMap(renderer);
             drawMap.drawMap(player.getPlace());
 
+            renderer.setLabel("🚨 Warnings:", 650, 150, 170, 30, new Font("Arial", Font.BOLD, 16));
             warningLabel(player);
             moveButton();
             shotButton();
@@ -172,8 +173,6 @@ public class HuntTheWumpusGUI {
         boolean isNextToWumpus = player.nextToWumpus();
         boolean isNextToBat = player.nextToBats();
         boolean isNextToPit = player.nextToPits();
-
-        renderer.setLabel("🚨 Warnings:", 650, 150, 170, 30, new Font("Arial", Font.BOLD, 16));
 
         if (isNextToWumpus) {
             warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 60,
