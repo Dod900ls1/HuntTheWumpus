@@ -41,7 +41,7 @@ public class HuntTheWumpusGUI {
         });
     }
 
-    // TODO - Clear text input after we pressed the move button
+
     private void moveButton() {
         System.out.println(game.getBats(1));
         DrawMap drawMap = new DrawMap(); // Initialize the map
@@ -91,7 +91,7 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Move", moveListener, 40, 150);
     }
 
-    // TODO - Clear text input after we pressed the shot button
+
     private void shotButton() {
         renderer.setLabel("<html>Write where you want to<br>shoot</html>", 10, 300, 250, 40);
         caveNumberField2 = renderer.setTextField("Input cave number", 10, 350, 175, 20);
@@ -147,7 +147,7 @@ public class HuntTheWumpusGUI {
         }
 
         if (isNextToBat) {
-            warning2 = renderer.setLabel("🦇 You can hear Bats near you!", 600, 250, 250, 30,
+            warning2 = renderer.setLabel("🦇 You can hear Bats near you!", 600, 250, 250, 60,
                     new Font("Arial", Font.ITALIC, 14));
         } else {
             if (warning2 != null) {
@@ -157,7 +157,7 @@ public class HuntTheWumpusGUI {
         }
 
         if (isNextToPit) {
-            warning3 = renderer.setLabel("<html>💨 You can feel a breeze of<br>wind.A pit is near you!</html>", 600, 300, 400, 30,
+            warning3 = renderer.setLabel("<html>💨 You can feel a breeze of<br>wind.A pit is near you!</html>", 600, 300, 400, 60,
                     new Font("Arial", Font.ITALIC, 14));
         } else {
             if (warning3 != null) {

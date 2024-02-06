@@ -1,10 +1,14 @@
 import javax.swing.*;
+
+import org.w3c.dom.events.MouseEvent;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
 import java.util.Arrays;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.WindowEvent;
 
 public class Renderer extends JPanel {
@@ -164,14 +168,14 @@ public class Renderer extends JPanel {
         JTextField textField = new JTextField(text);
         textField.setBounds(x, y, width, height);
 
+
+
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (textField.getText().equals(text)) {
-                    textField.setText("");
-                }
+                textField.setText("");
             }
-
+    
             @Override
             public void focusLost(FocusEvent e) {
                 if (textField.getText().isEmpty()) {
@@ -179,7 +183,6 @@ public class Renderer extends JPanel {
                 }
             }
         });
-
         frame.add(textField);
         frame.repaint();
 
