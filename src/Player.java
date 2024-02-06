@@ -51,6 +51,18 @@ public class Player {
     private boolean isLocationOccupied(int location) {
         int[] pits = game.getPitsArr();
         int[] bats = game.getBatsArr();
+        Wumpus[] wumpuses = game.getWumpusArr();
+        int[] wumpusesLoc = new int[2];
+        
+        for (int i=0; i < wumpuses.length; i++) {
+            wumpusesLoc[i] = wumpuses[i].getWumpusLoc();
+        }
+
+        for (int wumpus : wumpusesLoc) {
+            if (location == wumpus) {
+                return true;
+            }
+        }
 
         for (int pit : pits) {
             if (location == pit) {
