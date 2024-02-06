@@ -31,6 +31,7 @@ public class Renderer extends JPanel {
         return instance;
     }
 
+    // MAGIC CODE - DON'T TOUCH!
     public void setPlayerLocation(int playerLocation) {
         this.playerLocation = playerLocation;
     }
@@ -58,7 +59,7 @@ public class Renderer extends JPanel {
             }
             // Draw "i" inside the circle
             g.setColor(Color.BLACK);
-            Font font = new Font("Arial", Font.PLAIN, 12);
+            Font font = new Font("Arial", Font.BOLD, 12);
             g.setFont(font);
 
             int textX = circleX[i] + 3;
@@ -164,8 +165,6 @@ public class Renderer extends JPanel {
         JTextField textField = new JTextField(text);
         textField.setBounds(x, y, width, height);
 
-
-
         textField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -179,6 +178,7 @@ public class Renderer extends JPanel {
                 }
             }
         });
+
         frame.add(textField);
         frame.repaint();
 

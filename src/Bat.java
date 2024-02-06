@@ -1,9 +1,7 @@
-import java.lang.management.PlatformLoggingMXBean;
-
 import javax.swing.JOptionPane;
 
 public class Bat {
-    Renderer renderer = Renderer.getInstance();
+
     /**
      * Check if the player encounters bats. If bats brought gamer to a pit or to
      * Wumpus, method would terminate the program.
@@ -43,7 +41,7 @@ public class Bat {
      * @param player
      * @return
      */
-    public boolean batTrapGUI(int currentPlace,Game game,Player player) {
+    public boolean batTrapGUI(int currentPlace,Game game,Player player, Renderer renderer) {
         //Checks if player has reached same location of bats
         if (checkBatLocation(currentPlace, game)) {
             currentPlace = generateUniquePlayerLocation(game, player);

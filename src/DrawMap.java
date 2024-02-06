@@ -4,7 +4,11 @@ import java.io.IOException;
 import javax.json.*;
 
 public class DrawMap {
-    Renderer renderer = Renderer.getInstance();
+    private Renderer renderer;
+
+    public DrawMap(Renderer renderer){
+        this.renderer = renderer;
+    }
 
     private void drawCaves(int playerLocation){
         try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedronCorrected.json"))) {

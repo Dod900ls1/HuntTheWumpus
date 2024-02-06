@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 
 public class Player {
 
-    Renderer renderer = Renderer.getInstance();
     // Scanner for user input
     private static Scanner scanner = new Scanner(System.in);
 

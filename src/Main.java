@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class Main {
     private static Scanner scanner = new Scanner(System.in);
-
     public static void main(String[] args) {
+        
+        
         boolean runGame = true;
         Wumpus wumpus0 = new Wumpus();
         Wumpus wumpus1 = new Wumpus();

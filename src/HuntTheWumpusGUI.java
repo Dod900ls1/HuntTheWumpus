@@ -15,6 +15,7 @@ public class HuntTheWumpusGUI {
     private Player player;
     private Renderer renderer;
     private DrawMap drawMap;
+
     private JTextField caveNumberField1;
     private JTextField caveNumberField2;
     private JLabel arrowLabel;
@@ -31,7 +32,7 @@ public class HuntTheWumpusGUI {
             player = new Player(game);
             bat = new Bat();
             renderer = Renderer.getInstance();
-            drawMap = new DrawMap();
+            drawMap = new DrawMap(renderer);
             drawMap.drawMap(player.getPlace());
 
             warningLabel(player);
@@ -43,12 +44,13 @@ public class HuntTheWumpusGUI {
 
 
     /**
-     * This button allows user to walk
+     * This button allows user to walk. 
+     * Also checks if we feel in a pit or walked to a Wumpus cave.
      */
     private void moveButton() {
         System.out.println(game.getBats(1));
         System.err.println(game.getArrowLocsArr()[1] + "   " + game.getArrowLocsArr()[0]);
-        DrawMap drawMap = new DrawMap(); // Initialize the map
+        DrawMap drawMap = new DrawMap(renderer); // Initialize the map
         renderer.setLabel("Write where you want to move", 10, 50, 250, 40);
         caveNumberField1 = renderer.setTextField("Input cave number", 10, 100, 175, 20);
 
@@ -75,7 +77,7 @@ public class HuntTheWumpusGUI {
                     showMessageAndClose("You fall into a pit, you're dead!");
                 } else if (!wumpus0.WumpusTrap(player.getPlace()) || !wumpus1.WumpusTrap(player.getPlace())) {
                     showMessageAndClose("You walk into a Wumpus cave and it eats you!");
-                } else if (!bat.batTrapGUI(player.getPlace(), game, player)) {
+                } else if (!bat.batTrapGUI(player.getPlace(), game, player, renderer)) {
                     renderer.windowClose();
                 }
 
@@ -131,24 +133,24 @@ public class HuntTheWumpusGUI {
         renderer.setButton("Shoot", shootListener, 40, 400);
     }
 
-/**
- * Checks if the new location of player contains an uncollected arrow
- * This is used to increase the number of arrows available. 
- * GUI version
- */
-private void onArrowGUI() {
-    for (int arrowLocale : game.getArrowLocsArr()) {
-        // Checks whether the location of the player contains an arrow
-        if (player.getPlace() == arrowLocale) {
-            int arrows = player.getArrows();
-            player.setArrows(arrows + 1);
-            JOptionPane.showMessageDialog(null, "You picked up an Arrow! You now have " + player.getArrows() + " arrows");
-            renderer.removeLabel(arrowLabel);
-            arrowCounter(player.getArrows());
-            this.game.setArrowsLocs(indexOf(this.game.getArrowLocsArr(), player.getPlace()), -1); // Removes this arrow
+    /**
+     * Checks if the new location of player contains an uncollected arrow
+     * This is used to increase the number of arrows available. 
+     * GUI version
+     */
+    private void onArrowGUI() {
+        for (int arrowLocale : game.getArrowLocsArr()) {
+            // Checks whether the location of the player contains an arrow
+            if (player.getPlace() == arrowLocale) {
+                int arrows = player.getArrows();
+                player.setArrows(arrows + 1);
+                JOptionPane.showMessageDialog(null, "You picked up an Arrow! You now have " + player.getArrows() + " arrows");
+                renderer.removeLabel(arrowLabel);
+                arrowCounter(player.getArrows());
+                this.game.setArrowsLocs(indexOf(this.game.getArrowLocsArr(), player.getPlace()), -1); // Removes this arrow
+            }
         }
     }
-}
 
 
     private int indexOf(int[] arr, int element) {
@@ -159,6 +161,7 @@ private void onArrowGUI() {
         }
         return -1;
     }
+    
     /**
      * Check if the player is next to any Dangers. If so, output this:
      * 
@@ -173,8 +176,8 @@ private void onArrowGUI() {
         renderer.setLabel("🚨 Warnings:", 650, 150, 170, 30, new Font("Arial", Font.BOLD, 16));
 
         if (isNextToWumpus) {
-            warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 30,
-                    new Font("Arial", Font.ITALIC, 16));
+            warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 60,
+                    new Font("Arial", Font.ITALIC, 14));
         } else {
             if (warning1 != null) {
                 renderer.removeLabel(warning1);
