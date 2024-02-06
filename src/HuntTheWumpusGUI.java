@@ -123,6 +123,7 @@ public class HuntTheWumpusGUI {
 
                     renderer.removeLabel(arrowLabel);
                     arrowCounter(player.getArrows());
+                   
                     warningLabel(player);
 
                 } catch (NumberFormatException ex) {
@@ -173,30 +174,36 @@ public class HuntTheWumpusGUI {
         boolean isNextToWumpus = player.nextToWumpus();
         boolean isNextToBat = player.nextToBats();
         boolean isNextToPit = player.nextToPits();
-
+    
         if (isNextToWumpus) {
-            warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 60,
-                    new Font("Arial", Font.ITALIC, 14));
+            if (warning1 == null) {
+                warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 60,
+                        new Font("Arial", Font.ITALIC, 14));
+            }
         } else {
             if (warning1 != null) {
                 renderer.removeLabel(warning1);
                 warning1 = null; // Reset the reference
             }
         }
-
+    
         if (isNextToBat) {
-            warning2 = renderer.setLabel("🦇 You can hear Bats near you!", 600, 250, 250, 60,
-                    new Font("Arial", Font.ITALIC, 14));
+            if (warning2 == null) {
+                warning2 = renderer.setLabel("🦇 You can hear Bats near you!", 600, 250, 250, 60,
+                        new Font("Arial", Font.ITALIC, 14));
+            }
         } else {
             if (warning2 != null) {
                 renderer.removeLabel(warning2);
                 warning2 = null; // Reset the reference
             }
         }
-
+    
         if (isNextToPit) {
-            warning3 = renderer.setLabel("<html>💨 You can feel a breeze of<br>wind.A pit is near you!</html>", 600, 300, 400, 60,
-                    new Font("Arial", Font.ITALIC, 14));
+            if (warning3 == null) {
+                warning3 = renderer.setLabel("<html>💨 You can feel a breeze of<br>wind.A pit is near you!</html>", 600, 300, 400, 60,
+                        new Font("Arial", Font.ITALIC, 14));
+            }
         } else {
             if (warning3 != null) {
                 renderer.removeLabel(warning3);
