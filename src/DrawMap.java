@@ -7,7 +7,7 @@ public class DrawMap {
     Renderer renderer = Renderer.getInstance();
 
     private void drawCaves(int playerLocation){
-        try (JsonReader reader = Json.createReader(new FileReader("../NodeGenerator/dodecahedronCorrected.json"))) {
+        try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedronCorrected.json"))) {
             JsonObject jsonRoot = reader.readObject();
             JsonArray nodesArray = jsonRoot.getJsonArray("nodes");
 
@@ -31,7 +31,7 @@ public class DrawMap {
     }
 
     private void drawEdges(){
-        try (JsonReader reader = Json.createReader(new FileReader("../NodeGenerator/dodecahedronCorrected.json"))) {
+        try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedronCorrected.json"))) {
             JsonObject jsonRoot2 = reader.readObject();
             JsonArray nodesArray2 = jsonRoot2.getJsonArray("links");
             

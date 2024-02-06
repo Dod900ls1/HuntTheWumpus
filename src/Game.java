@@ -193,7 +193,7 @@ public class Game {
      * @return HashMap<Integer, Integer[]> which is the nodes that can be accessed
      */
     public HashMap<Integer, Integer[]> generateCaveConnections() {
-        try (JsonReader reader = Json.createReader(new FileReader("../NodeGenerator/dodecahedronCorrected.json"))) {
+        try (JsonReader reader = Json.createReader(new FileReader("NodeGenerator/dodecahedronCorrected.json"))) {
             JsonObject jsonRoot = reader.readObject();
 
             // Get the "connections" JsonObject
