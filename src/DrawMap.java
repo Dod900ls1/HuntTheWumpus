@@ -55,8 +55,8 @@ public class DrawMap {
     }
 
     public void drawMap(int playerLocation){
-        drawCaves(playerLocation);
         drawEdges();
+        drawCaves(playerLocation);
     }
 
     public void resetMap() {

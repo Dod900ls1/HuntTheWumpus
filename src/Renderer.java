@@ -88,6 +88,8 @@ public class Renderer extends JPanel {
         frame.repaint();
     }
 
+    
+
     public void drawLines(Graphics g) {
         for (int i = 1; i < lineIndexes1.length; i++) {
             Graphics2D g2 = (Graphics2D) g;
@@ -155,6 +157,7 @@ public class Renderer extends JPanel {
 
     public void setButton(String text, ActionListener listener, int x, int y) {
         JButton button = new JButton(text);
+        
         button.addActionListener(listener);
         button.setBounds(x, y, 100, 100);
         frame.add(button);
