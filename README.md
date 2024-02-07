@@ -8,6 +8,10 @@ This project is a text-based implementation of the "Hunt the Wumpus" game. The g
 
 To run the game, execute the `Main` class in your Java environment. The game will prompt you with instructions and guide you through the gameplay.
 
+Before this, on console, ensure to write this EXPORT command:
+
+/////////WRITE COMMAND HERE////////////
+
 ## Classes
 
 ### Main

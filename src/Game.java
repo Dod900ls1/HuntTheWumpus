@@ -208,6 +208,12 @@ public class Game {
         return caves;
     }
 
+    /**
+     * Converts the Json Values to integers
+     * 
+     * @param jsonArray the Json Array to convert to
+     * @return the Array of the converted integers
+     */
     private static Integer[] convertJsonInteger(JsonArray jsonArray) {
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.size(); i++) {

@@ -11,6 +11,11 @@ public class Player {
     // Initial number of arrows
     private int arrows = 5;
 
+    /**
+     * Sets the amount of arrows held by the player
+     * 
+     * @param arrows The number of arrows the player has now
+    */
     public void setArrows(int arrows) {
         this.arrows = arrows;
     }
@@ -227,6 +232,11 @@ public class Player {
         }
     }
 
+    /**
+     * Checks if player killed a bat.
+     * 
+     * @param shot The location of where the shot was placed
+     */
     private void killBatGUI(int shot) {
         // Checks whether the location of the shot contains a bat
         for (int i : this.game.getBatsArr()) {
