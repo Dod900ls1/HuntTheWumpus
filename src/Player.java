@@ -301,6 +301,38 @@ public class Player {
         }
     }
 
+        /**
+     * Counts how much arrows player has left. If all of them used, terminate
+     * program as the player can't kill the Wumpus anymore. This is GUI
+     * version of original arrowCounter()
+     * 
+     * @return boolean of whether the game continues, considering the amount of
+     *         arrows left
+     */
+    private boolean arrowCounterGUI() {
+        if (arrows >= 1) {
+            // Decreases the number of arrows available
+            arrows--;
+            System.out.printf("You have %d arrows left.%n", arrows);
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(null,"You've used all of your arrows.");
+
+            //If there are still arrows around the map, give the player the chance to find them
+            for (int arrowLocs : game.getArrowLocsArr()) {
+                if(arrowLocs != -1){
+                    JOptionPane.showMessageDialog(null,"However there are still arrows left around the map. Find them!");
+                    return true;
+                }
+            }
+
+            // States no arrows left and ends game
+            JOptionPane.showMessageDialog(null, "Now you're useless. You lost!");
+            return false;
+        }
+    }
+
+
     /**
      * Checks if the new location of player contains an uncollected arrow
      * This is used to increase the number or arrows available
@@ -400,7 +432,7 @@ public class Player {
                 }
             }
 
-            return arrowCounter();
+            return arrowCounterGUI();
 
         } catch (InputMismatchException e) {
             // Used if invalid input is written
