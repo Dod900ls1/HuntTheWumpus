@@ -274,9 +274,19 @@ public class Player {
             System.out.printf("You have %d arrows left.%n", arrows);
             return true;
         } else {
-            // States no arrows left and ends game
             arrows--;
-            System.out.println("You've used all of your arrows. Now you're useless. You lost!");
+            System.out.println("You've used all of your arrows.");
+
+            //If there are still arrows around the map, give the player the chance to find them
+            for (int arrowLocs : game.getArrowLocsArr()) {
+                if(arrowLocs != -1){
+                    System.out.println("However there are still arrows left around the map. Find them!");
+                    return true;
+                }
+            }
+
+            // States no arrows left and ends game
+            System.out.println("Now you're useless. You lost!");
             return false;
         }
     }
@@ -306,6 +316,12 @@ public class Player {
      * @return boolean of whether game continues
      */
     public boolean shootArrow() {
+
+        //Player cannot shoot if there is no arrows left
+        if(arrows == 0){
+            System.out.println("You have no arrows left, find more!");
+            return true;
+        }
 
         System.out.printf("You can shoot in caves number %d, %d, %d%n",
                 this.game.generateCaveConnections().get(playerLocation)[0],
