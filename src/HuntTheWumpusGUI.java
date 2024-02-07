@@ -2,8 +2,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
@@ -44,6 +47,46 @@ public class HuntTheWumpusGUI {
     }
 
 
+    private static void createStartMenu() {
+        JFrame startFrame = new JFrame("Hunt the Wumpus");
+        startFrame.setSize(400, 200);
+        startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel startPanel = new JPanel();
+        startPanel.setLayout(null);
+
+        JLabel title = new JLabel("Hunt the Wumpus");
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setBounds(70, 20, 400, 30);
+        startPanel.add(title);
+
+        JButton startButton = new JButton("Start Game");
+        startButton.setBounds(100, 70, 200, 30);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startFrame.dispose(); // Close the start menu
+                new HuntTheWumpusGUI();
+            }
+        });
+        startPanel.add(startButton);
+
+        JButton exitButton = new JButton("Exit");
+        exitButton.setBounds(100, 110, 200, 30);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        startPanel.add(exitButton);
+
+        startFrame.add(startPanel);
+        startFrame.setLocationRelativeTo(null); // Center the start menu
+        startFrame.setVisible(true);
+    }
+
+    
     /**
      * This button allows user to walk. 
      * Also checks if we feel in a pit or walked to a Wumpus cave.
@@ -223,6 +266,6 @@ public class HuntTheWumpusGUI {
     }
 
     public static void main(String[] args) {
-        new HuntTheWumpusGUI();
+        createStartMenu();
     }
 }
