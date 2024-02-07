@@ -310,7 +310,7 @@ public class Player {
      *         arrows left
      */
     private boolean arrowCounterGUI() {
-        if (arrows >= 1) {
+        if (arrows > 0) {
             // Decreases the number of arrows available
             arrows--;
             System.out.printf("You have %d arrows left.%n", arrows);
