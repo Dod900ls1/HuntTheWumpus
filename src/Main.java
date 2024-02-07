@@ -14,7 +14,7 @@ public class Main {
         GameStarter gameStarter = new GameStarter();
         
         
-        System.out.println("Do you want to see instructions? (Y/N)");
+        System.out.println("Do you want to see instructions and a game map? (Y/N)");
         String initInstructions = scanner.nextLine();
         gameStarter.starterInstructions(initInstructions);
         
