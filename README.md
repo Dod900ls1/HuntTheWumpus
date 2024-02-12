@@ -6,13 +6,23 @@ This project is a text-based implementation of the "Hunt the Wumpus" game. The g
 
 ## Getting Started
 
-To run the game, execute the `Main` class in your Java environment. The game will prompt you with instructions and guide you through the gameplay.
-
-Before this, on console, ensure to write this command:
+Before anything ensure you are in the src folder on console and ensure to write these commands:
 
 ```
-export CLASSPATH=${CLASSPATH}:./javax.json-1.0.jar
+export CLASSPATH=${CLASSPATH}:../lib/*.jar
+javac*.java
 ```
+
+To run the GUI implimentation of this game, execute the `HuntTheWumpusGUI` class in your Java Environment. This is done by the following command:
+```
+java HuntTheWumpusGUI
+```
+
+To run the text-based game implimentation of this game, execute the `Main` class in your Java environment. This is done by the following command:
+```
+java Main
+```
+The game will prompt you with instructions and guide you through the gameplay.
 
 ## Classes
 
