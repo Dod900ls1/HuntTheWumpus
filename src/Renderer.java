@@ -12,7 +12,6 @@ public class Renderer extends JPanel {
     private static Renderer instance;
     private JFrame frame;
     private int playerLocation = -1;
-    // TODO - Make it a bit more flexible. Take length directly from json file.
     private int[] circleX = new int[20];
     private int[] circleY = new int[20];
     private int[] lineIndexes1 = new int[31];
@@ -20,7 +19,7 @@ public class Renderer extends JPanel {
 
     // Public constructor
     private Renderer() {
-        frame = new JFrame("Testing");
+        frame = new JFrame("Hunt The Wumpus");
         configFrame();
     }
 

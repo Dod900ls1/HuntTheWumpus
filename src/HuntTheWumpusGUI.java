@@ -221,7 +221,7 @@ public class HuntTheWumpusGUI {
         if (isNextToWumpus) {
             if (warning1 == null) {
                 warning1 = renderer.setLabel("<html>👃 You smell the Wumpus in one of<br>the neighboring caves!</html>", 600, 200, 250, 60,
-                        new Font("Arial", Font.ITALIC, 14));
+                        new Font("Arial", Font.PLAIN, 14));
             }
         } else {
             if (warning1 != null) {
@@ -233,7 +233,7 @@ public class HuntTheWumpusGUI {
         if (isNextToBat) {
             if (warning2 == null) {
                 warning2 = renderer.setLabel("🦇 You can hear Bats near you!", 600, 250, 250, 60,
-                        new Font("Arial", Font.ITALIC, 14));
+                        new Font("Arial", Font.PLAIN, 14));
             }
         } else {
             if (warning2 != null) {
@@ -245,7 +245,7 @@ public class HuntTheWumpusGUI {
         if (isNextToPit) {
             if (warning3 == null) {
                 warning3 = renderer.setLabel("<html>💨 You can feel a breeze of<br>wind.A pit is near you!</html>", 600, 300, 400, 60,
-                        new Font("Arial", Font.ITALIC, 14));
+                        new Font("Arial", Font.PLAIN, 14));
             }
         } else {
             if (warning3 != null) {
