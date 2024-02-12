@@ -126,7 +126,7 @@ public class Player {
      * Method to display current location and available caves
      */
     public void locationOutput() {
-        System.out.printf("You're in the cave number, %d.%nAvailible caves are: %d, %d, %d.%n", playerLocation,
+        System.out.printf("You're in the cave number, %d.%nAvailable caves are: %d, %d, %d.%n", playerLocation,
                 this.game.generateCaveConnections().get(playerLocation)[0],
                 this.game.generateCaveConnections().get(playerLocation)[1],
                 this.game.generateCaveConnections().get(playerLocation)[2]);
