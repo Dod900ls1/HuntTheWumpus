@@ -36,7 +36,7 @@ public class GameStarter {
 
                 GOOD LUCK HUNTING!!
                     """;
-        // TODO - change numbers of caves.
+
         String map = """
                                                    __
                                            ...... /  \\

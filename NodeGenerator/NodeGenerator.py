@@ -1,3 +1,5 @@
+# THIS PIESE OF CODE HAS BEEN TAKEN FROM https://github.com/explorablesforsfi/dodecahedron-py
+
 import json
 import numpy as np
 import matplotlib.pyplot as pl

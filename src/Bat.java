@@ -64,6 +64,7 @@ public class Bat {
         return true;
     }
 
+    
     /**
      * Generate a unique location for player
      * @param game
