@@ -2,26 +2,21 @@
 
 ## Introduction
 
-This project is a text-based implementation of the "Hunt the Wumpus" game. The game is set in a cave with interconnected rooms, where the player must navigate, avoid hazards like pits and bats, and ultimately find and defeat the Wumpus.
+This project is a GUI implimentation and a text-based implementation of the "Hunt the Wumpus" game, with multiple adaptations. The game is set in a cave with interconnected rooms, where the player must navigate, avoid hazards like pits and bats, and ultimately find and defeat the Wumpus.
 
 ## Getting Started
 
-Before anything ensure you are in the src folder on console and ensure to write these commands:
+Before anything ensure you are in the HuntTheWumpus folder on console and ensure to write this command:
 
 ```
-export CLASSPATH=${CLASSPATH}:../lib/*.jar
-javac*.java
+export CLASSPATH=${CLASSPATH}: ./lib/*.jar
 ```
+As well as this, download Java extensions on Visual Studio Code.
 
-To run the GUI implimentation of this game, execute the `HuntTheWumpusGUI` class in your Java Environment. This is done by the following command:
-```
-java HuntTheWumpusGUI
-```
+To run the GUI implimentation of this game, navigate to the `HuntTheWumpusGUI.java` file in the src directory (while remaining outside the src directory) and execute the `HuntTheWumpusGUI` class in your Java Environment. This is done by clicking the triangle button on the top-right of the screen.
 
-To run the text-based game implimentation of this game, execute the `Main` class in your Java environment. This is done by the following command:
-```
-java Main
-```
+To run the text-based game implimentation of this game, navigate to the `Main.java` file in the src directory (while remaining outside the src directory) execute the `Main` class in your Java environment. This is done by clicking the triangle button on the top-right of the screen.
+
 The game will prompt you with instructions and guide you through the gameplay.
 
 ## Classes
