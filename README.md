@@ -2,7 +2,8 @@
 
 ## Introduction
 
-This project is a GUI implimentation and a text-based implementation of the "Hunt the Wumpus" game, with multiple adaptations. The game is set in a cave with interconnected rooms, where the player must navigate, avoid hazards like pits and bats, and ultimately find and defeat the Wumpus.
+This project is a GUI implimentation and a text-based implementation of the "Hunt the Wumpus" game, with multiple adaptations. The game is set in a cave with interconnected rooms, where the player must navigate, avoid hazards like pits and bats, and ultimately find and defeat the Wumpus. 
+The Version Control Repository can be accessed from https://github.com/Dod900ls1/HuntTheWumpus/. However the program code and all necessary libraries can also be accessed from the directory `/cs/group/cs1006-p1-group15/HuntTheWumpus`
 
 ## Getting Started
 
